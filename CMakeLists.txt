@@ -12,7 +12,7 @@ endif()
 project (FinanceLib)
 
 # Add source to this project's executable.
-add_executable (FinanceLib "main.cpp" "matlib.cpp" "matlib.h")
+add_executable (FinanceLib "main.cpp" "matlib.cpp" "matlib.h" "stdafx.h" "geometry.cpp" "geometry.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET FinanceLib PROPERTY CXX_STANDARD 20)

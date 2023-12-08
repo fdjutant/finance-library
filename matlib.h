@@ -1,6 +1,6 @@
 #pragma once
 
-const double PI = 3.14159265358979;
+static const double PI = 3.14159265358979;
 
 /**
  * Compute the cumulative distributive

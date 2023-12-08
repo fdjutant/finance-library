@@ -1,43 +1,43 @@
 #include "matlib.h"
-#include <cmath>
+#include "stdafx.h"
 
-double hornerFunction(double x, double a0, double a1) {
+static inline double hornerFunction(double x, double a0, double a1) {
     return a0 + x * a1;
 }
 
-double hornerFunction(double x, double a0, double a1, double a2) {
+static inline double hornerFunction(double x, double a0, double a1, double a2) {
     return a0 + x * hornerFunction(x, a1, a2);
 }
 
-double hornerFunction(double x, double a0, double a1, double a2, double a3) {
+static inline double hornerFunction(double x, double a0, double a1, double a2, double a3) {
     return a0 + x * hornerFunction(x, a1, a2, a3);
 }
 
-double hornerFunction(double x, double a0, double a1, double a2, double a3, double a4) {
+static inline double hornerFunction(double x, double a0, double a1, double a2, double a3, double a4) {
     return a0 + x * hornerFunction(x, a1, a2, a3, a4);
 }
 
-double hornerFunction(double x, double a0, double a1, double a2, double a3, double a4,
+static inline double hornerFunction(double x, double a0, double a1, double a2, double a3, double a4,
     double a5) {
     return a0 + x * hornerFunction(x, a1, a2, a3, a4, a5);
 }
 
-double hornerFunction(double x, double a0, double a1, double a2, double a3, double a4,
+static inline double hornerFunction(double x, double a0, double a1, double a2, double a3, double a4,
     double a5, double a6) {
     return a0 + x * hornerFunction(x, a1, a2, a3, a4, a5, a6);
 }
 
-double hornerFunction(double x, double a0, double a1, double a2, double a3, double a4,
+static inline double hornerFunction(double x, double a0, double a1, double a2, double a3, double a4,
     double a5, double a6, double a7) {
     return a0 + x * hornerFunction(x, a1, a2, a3, a4, a5, a6, a7);
 }
 
-double hornerFunction(double x, double a0, double a1, double a2, double a3, double a4,
+static inline double hornerFunction(double x, double a0, double a1, double a2, double a3, double a4,
     double a5, double a6, double a7, double a8) {
     return a0 + x * hornerFunction(x, a1, a2, a3, a4, a5, a6, a7, a8);
 }
 
-const double Root2PI = sqrt(2.0 * 3.141592653589793);
+static const double Root2PI = sqrt(2.0 * 3.141592653589793);
 double normcdf(double x) {
 
     if (x < 0) {

@@ -2,3 +2,5 @@ out/
 .vs/
 *.vcxproj*
 x64
+*.sln
+*.json
