@@ -17,3 +17,9 @@ double normInv(double x);
  * Perform unit testing
 */
 void testMatlib();
+void testblackScholesPutPrice(double K, double T, double S, double sigma, double r);
+
+/**
+ * black-Scholes Put Price
+**/
+double blackScholesPutPrice(double strikePrice, double timeToMaturity, double spotPrice, double volatility, double riskFreeInterestRate);

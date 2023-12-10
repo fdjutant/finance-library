@@ -90,10 +90,26 @@ double normInv(double x) {
 
 }
 
+double blackScholesPutPrice(double K, double T, double S, double sigma, double r) {
 
-/*
-** Testing functions
-*/
+    DEBUG_PRINT("blackScholesCallPrice(" << K << "," << T << "," << S << "," << sigma << "," << r << ")");
+
+    double denominator = sigma * sqrt(T);
+    double numerator = log(S / K) + (r + 0.5 * sigma) * T;
+
+    double d1 = numerator / denominator;
+    double d2 = d1 - denominator;
+
+    //double callPriceOption = normcdf(d1) * S - normcdf(d2) *K * exp(-r * T);
+    double putPriceOption = normcdf(-d2) * K * exp(-r * T) - normcdf(-d1) * S;
+
+    return putPriceOption;
+}
+
+
+/////////////////////////
+///     Testing     /////
+/////////////////////////
 static void testNormCdf() {
     
     // test bounds
@@ -123,13 +139,37 @@ static void testNormInv() {
 
     // test well-known value
     ASSERT_APPROX_EQUAL(normInv(0.975), 1.96, 0.001);
+
+}
+
+static void testblackScholesPutPrice() {
+    
+    // set some testing parameters
+    double K = 100.0;      // strike price
+    double T = 0.5;        // time to maturity
+    double S = 110.0;      // spot price
+    double sigma = 0.1;    // volatility
+    double r = 0.03;       // risk-free interest rate
+
+
+    // test that the put option is nearly worthless if the stock price (S) is far above the strike price (K)
+    ASSERT(S < 10.0 * K);
+
+    // test that the price of the put option is always positive
+    ASSERT(blackScholesPutPrice(K, T, S, sigma, r) > 0.0);
+
+    // TO DO: test the put-call parity formula
 }
 
 void testMatlib() {
     
     setDebugEnabled(false);
-    TEST(testNormCdf);
+    TEST( testNormCdf );
+
+    setDebugEnabled(false);
+    TEST( testNormInv );
 
     setDebugEnabled(true);
-    TEST( testNormInv );
+    TEST(testblackScholesPutPrice);
+
 }

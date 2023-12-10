@@ -11,3 +11,8 @@ double area(double radius);
  * Compute circumference of a circle
 **/
 double circumference(double radius);
+
+/**
+ * Perform a unit testing 
+**/
+void testGeometry();
