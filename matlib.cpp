@@ -41,7 +41,7 @@ static inline double hornerFunction(double x, double a0, double a1, double a2, d
 static const double Root2PI = sqrt(2.0 * 3.141592653589793);
 double normcdf(double x) {
 
-      DEBUG_PRINT("normcdf(" << x << ")");
+    DEBUG_PRINT("normcdf(" << x << ")");
 
     if (x < 0) {
         return 1 - normcdf(-x);
@@ -55,8 +55,9 @@ double normcdf(double x) {
     return approx;
 }
 
-
 double normInv(double x) {
+
+    DEBUG_PRINT("normInv(" << x << ")");
 
     // Moro's algorithm
     double y = x - 0.5;
@@ -90,3 +91,45 @@ double normInv(double x) {
 }
 
 
+/*
+** Testing functions
+*/
+static void testNormCdf() {
+    
+    // test bounds
+    ASSERT(normcdf(0.3) > 0);
+    ASSERT(normcdf(0.3) < 1);
+
+    // test extreme values
+    ASSERT_APPROX_EQUAL(normcdf(-1e10), 0 , 0.001);
+    ASSERT_APPROX_EQUAL(normcdf(1e10), 1, 0.001);
+
+    // test increasing
+    ASSERT(normcdf(0.3) < normcdf(0.5));
+
+    // test symmetry
+    ASSERT_APPROX_EQUAL(normcdf(0.3), 1.0 - normcdf(-0.3), 0.0001);
+    ASSERT_APPROX_EQUAL(normcdf(0.0), 0.5, 0.0001);
+
+    // test inverse
+    ASSERT_APPROX_EQUAL(normcdf(normInv(0.3)), 0.3, 0.0001);
+
+    // test well known value
+    ASSERT_APPROX_EQUAL(normcdf(1.96), 0.975, 0.001);
+
+}
+
+static void testNormInv() {
+
+    // test well-known value
+    ASSERT_APPROX_EQUAL(normInv(0.975), 1.96, 0.001);
+}
+
+void testMatlib() {
+    
+    setDebugEnabled(false);
+    TEST(testNormCdf);
+
+    setDebugEnabled(true);
+    TEST( testNormInv );
+}

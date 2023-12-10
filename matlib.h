@@ -12,3 +12,8 @@ double normcdf(double x);
  * Compute the inverse of normdcdf
 */
 double normInv(double x);
+
+/**
+ * Perform unit testing
+*/
+void testMatlib();
