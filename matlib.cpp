@@ -1,5 +1,6 @@
 #include "matlib.h"
 #include "stdafx.h"
+#include "testing.h"
 
 static inline double hornerFunction(double x, double a0, double a1) {
     return a0 + x * a1;
@@ -39,6 +40,8 @@ static inline double hornerFunction(double x, double a0, double a1, double a2, d
 
 static const double Root2PI = sqrt(2.0 * 3.141592653589793);
 double normcdf(double x) {
+
+      DEBUG_PRINT("normcdf(" << x << ")");
 
     if (x < 0) {
         return 1 - normcdf(-x);
@@ -85,3 +88,5 @@ double normInv(double x) {
     }
 
 }
+
+
