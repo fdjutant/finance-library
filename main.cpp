@@ -1,12 +1,17 @@
 #include "stdafx.h"
 #include "matlib.h"
 #include "geometry.h"
+#include "scratch.h"
 using namespace std;
 
 int main() {
 
+    // Test scratch
+    //printNumber();
+    printVector();
+
     // Perform unit testing
-    testMatlib();
+    //testMatlib();
     //testGeometry();
 
     // Black-Scholes pricing
