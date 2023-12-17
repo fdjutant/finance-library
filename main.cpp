@@ -6,9 +6,29 @@ using namespace std;
 
 int main() {
 
+    // Test an ofstream
+    //writingOfstream();
+    testWriteHaiku();
+
+    // Pass by reference without const
+    //testPolarToCartesian();
+
+
+    // Pass-by-reference vs pass-by-value
+    //int x = 5;
+    //cout << "A: value of x is " << x << "\n";
+    //printNextValue2(x);
+    //cout << "C: value of x is " << x << "\n";
+
+
+    // Sum a vector
+    //vector<double> vectorA(10, 4.0);
+    //cout << "Sum of vectorA elements is " << sum(vectorA);
+
     // Test scratch
     //printNumber();
-    printVector();
+    //printVector();
+    
 
     // Perform unit testing
     //testMatlib();

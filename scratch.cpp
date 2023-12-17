@@ -3,6 +3,89 @@
 #include "testing.h"
 using namespace std;
 
+
+static void writingHaiku(ostream& out) {
+	out << "The wren\n";
+	out << "Earn his living\n";
+	out << "Noiselessly.\n";
+}
+
+void testWriteHaiku() {
+	
+	// write a Haiku to cout
+	writingHaiku(cout);
+
+	// write a Haiku to a file
+	ofstream out;
+	out.open("./txtFiles/haiku.txt");
+	if (out.is_open()) {
+		writingHaiku(out);
+	}
+	else {
+		cout << "Unsuccesful";
+	}
+	out.close();
+
+}
+
+void writingOfstream() {
+	// create an ofstream
+	ofstream out;
+
+	// choose where to write
+	out.open("./txtFiles/myfile.txt");
+
+	if (out.is_open()) {
+		cout << "Success!";
+	}
+	else {
+		cout << "Unsuccessful";
+	}
+
+	out << "The first line\n";
+	out << "The second line\n";
+	out << "The third line\n";
+
+	// close the file after finished
+	out.close();
+}
+
+static void polarToCartesian(double r, double theta, double& x, double& y) {
+	x = r * cos(theta);
+	y = r * sin(theta);
+}
+
+void testPolarToCartesian() {
+	double PI = 3.14159265358979;
+	double r = 2.0;
+	double theta = PI / 2;
+	double x = 0.0, y = 0.0;
+	polarToCartesian(r, theta, x, y);
+	ASSERT_APPROX_EQUAL(x, 0.0, 0.001);
+	ASSERT_APPROX_EQUAL(y, 2.0, 0.001);
+	cout << "x = " << x << ", y = " << y << "\n";
+}
+
+void printNextValue2(int& x) {
+	x = x + 1;
+	cout << "B: value of x is " << x << "\n";
+}
+
+void printNextValue(int x) {
+	x = x + 1;
+	cout << "B: value of x is " << x << "\n";
+}
+
+
+double sum(const vector<double>& v) {
+	double total = 0.0;
+	int n = (int)v.size();
+	for (int i = 0; i < n; i++) {
+		total += v[i];
+	}
+	return total;
+}
+
 void printVector() {
 	
 	// create a vector
