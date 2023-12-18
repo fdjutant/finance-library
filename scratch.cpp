@@ -3,6 +3,22 @@
 #include "testing.h"
 using namespace std;
 
+void notEfficientString() {
+	string s("");
+	for (int i = 0; i < 100; i++) {
+		s += "blah";
+	}
+	cout << s << "\n";
+}
+
+void efficientString() {
+	stringstream ss;
+	for (int i = 0; i < 100; i++) {
+		ss << "blah";
+	}
+	string s = ss.str();
+	cout << s << "\n";
+}
 
 void usingString() {
 

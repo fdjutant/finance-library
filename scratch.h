@@ -2,10 +2,13 @@
 #include "stdafx.h"
 
 
+
 /**
 * function to test string
 **/
 void usingString();
+void notEfficientString();
+void efficientString();
 
 /**
 * function to test ofstream

@@ -7,7 +7,9 @@ using namespace std;
 int main() {
 
     // Test string class
-    usingString();
+    //usingString();
+    notEfficientString();
+    efficientString();
 
     // Test ofstream class
     //writingOfstream();
