@@ -1,6 +1,12 @@
 #pragma once
 #include "stdafx.h"
 
+
+/**
+* function to test string
+**/
+void usingString();
+
 /**
 * function to test ofstream
 **/

@@ -4,6 +4,28 @@
 using namespace std;
 
 
+void usingString() {
+
+	// Create a string
+	string s("Some text.");
+
+	// Write it to a stream
+	cout << s << "\n";
+	cout << "contains " << s.size() << " characters \n";
+
+	// Change it
+	s.insert(5, "more ");
+	cout << s << "\n";
+
+	// Append to it with +
+	s += " Yet more text.";
+	cout << s << "\n";
+
+	// Test equality
+	ASSERT(s == "Some more text. Yet more text.");
+
+}
+
 static void writingHaiku(ostream& out) {
 	out << "The wren\n";
 	out << "Earn his living\n";

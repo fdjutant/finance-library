@@ -6,13 +6,15 @@ using namespace std;
 
 int main() {
 
-    // Test an ofstream
+    // Test string class
+    usingString();
+
+    // Test ofstream class
     //writingOfstream();
-    testWriteHaiku();
+    //testWriteHaiku();
 
     // Pass by reference without const
     //testPolarToCartesian();
-
 
     // Pass-by-reference vs pass-by-value
     //int x = 5;
@@ -20,8 +22,7 @@ int main() {
     //printNextValue2(x);
     //cout << "C: value of x is " << x << "\n";
 
-
-    // Sum a vector
+    // Test vector class
     //vector<double> vectorA(10, 4.0);
     //cout << "Sum of vectorA elements is " << sum(vectorA);
 
