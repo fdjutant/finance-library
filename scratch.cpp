@@ -3,6 +3,21 @@
 #include "testing.h"
 using namespace std;
 
+static void writeCSVChartData(ostream& out, const vector<double>& x, const vector<double>& y) {
+	ASSERT(x.size() == y.size());
+	int n = (int)x.size();
+	for (int i = 0; i < n; i++) {
+		out << x[i] << "," << y[i] << "\n";
+	}
+}
+
+void writeCSVChart(const string& filename, const vector<double>& x, const vector<double>& y) {
+	ofstream out;
+	out.open(filename.c_str());
+	writeCSVChartData(out, x, y);
+	out.close();
+}
+
 void notEfficientString() {
 	string s("");
 	for (int i = 0; i < 100; i++) {
@@ -55,7 +70,7 @@ void testWriteHaiku() {
 
 	// write a Haiku to a file
 	ofstream out;
-	out.open("./txtFiles/haiku.txt");
+	out.open("./outputFiles/haiku.txt");
 	if (out.is_open()) {
 		writingHaiku(out);
 	}

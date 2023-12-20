@@ -6,10 +6,21 @@ using namespace std;
 
 int main() {
 
+
+
+    // Generate csv for plotting
+    //vector<double> x(100), y(100);
+    //int n = (int)x.size();
+    //for (int i = 0; i < n; i++) {
+    //    x[i] = i;
+    //    y[i] = i * i;
+    //}
+    //writeCSVChart("./outputFiles/data.csv", x, y);
+
     // Test string class
     //usingString();
-    notEfficientString();
-    efficientString();
+    //notEfficientString();
+    //efficientString();
 
     // Test ofstream class
     //writingOfstream();
