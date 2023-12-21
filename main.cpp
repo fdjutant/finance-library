@@ -2,11 +2,20 @@
 #include "matlib.h"
 #include "geometry.h"
 #include "scratch.h"
+#include "charts.h"
 using namespace std;
 
 int main() {
 
+    // Perform unit testing
+    //testMatlib();
+    //testGeometry();
+    //testCharts();   
 
+    // Generate a pie chart
+    vector<string> activity = {"Swimming", "Coding", "Working", "Cooking", "Sleeping"};
+    vector<double> hours = { 2, 3, 8, 2, 8 };
+    pieChart("./outputFiles/thePieChart.html", activity, hours);
 
     // Generate csv for plotting
     //vector<double> x(100), y(100);
@@ -44,9 +53,7 @@ int main() {
     //printVector();
     
 
-    // Perform unit testing
-    //testMatlib();
-    //testGeometry();
+
 
     // Black-Scholes pricing
     /*double strike = 100.0;
