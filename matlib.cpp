@@ -1,6 +1,7 @@
 #include "matlib.h"
 #include "stdafx.h"
 #include "testing.h"
+using namespace std;
 
 static inline double hornerFunction(double x, double a0, double a1) {
     return a0 + x * a1;
@@ -106,6 +107,44 @@ double blackScholesPutPrice(double K, double T, double S, double sigma, double r
     return putPriceOption;
 }
 
+void solveQuadratic_NoVector(double a, double b, double c, double& root1, double& root2) {
+
+    root1 = (-b + sqrt((b * b - 4.0 * a * c))) / (2.0 * a);
+    root2 = (-b - sqrt((b * b - 4.0 * a * c))) / (2.0 * a);
+    
+}
+
+void solveQuadratic(double a, double b, double c, vector<double>& roots) {
+
+    roots[0] = (-b + sqrt((b * b - 4.0 * a * c))) / (2.0 * a);
+    roots[1] = (-b - sqrt((b * b - 4.0 * a * c))) / (2.0 * a);
+
+}
+
+static void testSolveQuadratic() {
+
+    /* test specific values
+    (x + 3) (2x - 5) = 0;
+    2x^2 + x - 15 = 0
+    */
+    double a = 2.0, b = 1.0, c = -15;
+    
+    // without vector
+    double x1 = 0.0, x2 = 0.0;
+    solveQuadratic_NoVector(a, b, c, x1, x2);
+    INFO(x1);
+    INFO(x2);
+    ASSERT_APPROX_EQUAL(x1, 5.0/2.0, 0.001);
+    ASSERT_APPROX_EQUAL(x2, -3.0, 0.001);
+
+    // with vector
+    vector<double> roots(2);
+    solveQuadratic(a, b, c, roots);
+    ASSERT_APPROX_EQUAL(roots[0], 5.0 / 2.0, 0.001);
+    ASSERT_APPROX_EQUAL(roots[1], -3.0, 0.001);
+
+}
+
 
 /////////////////////////
 ///     Testing     /////
@@ -169,7 +208,10 @@ void testMatlib() {
     setDebugEnabled(false);
     TEST( testNormInv );
 
-    setDebugEnabled(true);
+    setDebugEnabled(false);
     TEST(testblackScholesPutPrice);
+
+    setDebugEnabled(true);
+    TEST(testSolveQuadratic);
 
 }
