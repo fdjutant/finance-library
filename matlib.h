@@ -1,6 +1,18 @@
 #pragma once
-
+#include "stdafx.h"
 static const double PI = 3.14159265358979;
+
+/**
+* Compute the mean of a vector
+*/
+double mean(const std::vector<double>& x);
+
+/**
+* Solve roots for a quadratic equation
+*/
+void solveQuadratic_NoVector(double a, double b, double c, double& root1, double& root2);
+void solveQuadratic(double a, double b, double c, std::vector<double>& roots);
+
 
 /**
  * Compute the cumulative distributive

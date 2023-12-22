@@ -12,7 +12,6 @@ int main() {
     //testGeometry();
     //testCharts();   
 
-
     // Generate a pie chart
     //vector<string> activity = {"Swimming", "Coding", "Working", "Cooking", "Sleeping"};
     //vector<double> hours = { 2, 3, 8, 2, 8 };
