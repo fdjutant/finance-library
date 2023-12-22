@@ -130,7 +130,7 @@ void printNextValue(int x) {
 }
 
 
-double sum(const vector<double>& v) {
+double summation(const vector<double>& v) {
 	double total = 0.0;
 	int n = (int)v.size();
 	for (int i = 0; i < n; i++) {

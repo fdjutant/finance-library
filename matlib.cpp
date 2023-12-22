@@ -3,8 +3,10 @@
 #include "testing.h"
 using namespace std;
 
-double mean(const vector<double>& x) {
-    
+/*
+   Compute sum, mean, standard deviation
+*/
+double sum(const vector<double>& x) {
     int n = (int)x.size();
     ASSERT(n > 0);
     int i = 0;
@@ -13,18 +15,40 @@ double mean(const vector<double>& x) {
         sum += x[i];
         i++;
     }
-    return sum / n;
-
+    return sum;
 }
 
-static void testMean() {
+double mean(const vector<double>& x) {
+    int n = (int)x.size();
+    ASSERT(n > 0);    
+    return sum(x) / n;
+}
+
+double standardDeviation(const vector<double>& x, bool population) {
     
-    // test specific values
-    vector<double> x = { -3.0, -2.0, -1.0, 0, 1.0, 2.0, 3.0 };
+    INFO(population);
+    ASSERT((population == 0) || (population == 1));
+
+    int Nsize = (int)x.size();
+    ASSERT(Nsize > 0);
+
     double meanValue = mean(x);
-    ASSERT_APPROX_EQUAL(meanValue, 0.0, 0.001);
+    double sum = 0.0;
+    for (int i = 0; i < Nsize; i++) {
+        sum += pow((x[i] - meanValue),2);
+    }
+    if (population) {
+        return sqrt(sum / Nsize);
+    }
+    else {
+        return sqrt(sum / (Nsize - 1));
+    }
+
 }
 
+/*
+    Solve roots of quadratic equation
+*/
 void solveQuadratic_NoVector(double a, double b, double c, double& root1, double& root2) {
 
     root1 = (-b + sqrt((b * b - 4.0 * a * c))) / (2.0 * a);
@@ -39,30 +63,9 @@ void solveQuadratic(double a, double b, double c, vector<double>& roots) {
 
 }
 
-static void testSolveQuadratic() {
-
-    /* test specific values
-    (x + 3) (2x - 5) = 0;
-    2x^2 + x - 15 = 0
-    */
-    double a = 2.0, b = 1.0, c = -15;
-
-    // without vector
-    double x1 = 0.0, x2 = 0.0;
-    solveQuadratic_NoVector(a, b, c, x1, x2);
-    INFO(x1);
-    INFO(x2);
-    ASSERT_APPROX_EQUAL(x1, 5.0 / 2.0, 0.001);
-    ASSERT_APPROX_EQUAL(x2, -3.0, 0.001);
-
-    // with vector
-    vector<double> roots(2);
-    solveQuadratic(a, b, c, roots);
-    ASSERT_APPROX_EQUAL(roots[0], 5.0 / 2.0, 0.001);
-    ASSERT_APPROX_EQUAL(roots[1], -3.0, 0.001);
-
-}
-
+/*
+    Compute normalized CDF and its inverse
+*/
 static inline double hornerFunction(double x, double a0, double a1) {
     return a0 + x * a1;
 }
@@ -170,6 +173,49 @@ double blackScholesPutPrice(double K, double T, double S, double sigma, double r
 /////////////////////////
 ///     Testing     /////
 /////////////////////////
+
+static void testStandardDeviation() {
+
+    // test specific values
+    vector<double> x = { -3.0, -2.0, -1.0, 0, 1.0, 2.0, 3.0 };
+
+    ASSERT_APPROX_EQUAL(standardDeviation(x, true), 2.0, 0.001);
+    ASSERT_APPROX_EQUAL(standardDeviation(x, false), sqrt(28.0/6.0), 0.001);
+
+}
+
+static void testMean() {
+
+    // test specific values
+    vector<double> x = { -3.0, -2.0, -1.0, 0, 1.0, 2.0, 3.0 };
+    double meanValue = mean(x);
+    ASSERT_APPROX_EQUAL(meanValue, 0.0, 0.001);
+}
+
+static void testSolveQuadratic() {
+
+    /* test specific values
+    (x + 3) (2x - 5) = 0;
+    2x^2 + x - 15 = 0
+    */
+    double a = 2.0, b = 1.0, c = -15;
+
+    // without vector
+    double x1 = 0.0, x2 = 0.0;
+    solveQuadratic_NoVector(a, b, c, x1, x2);
+    INFO(x1);
+    INFO(x2);
+    ASSERT_APPROX_EQUAL(x1, 5.0 / 2.0, 0.001);
+    ASSERT_APPROX_EQUAL(x2, -3.0, 0.001);
+
+    // with vector
+    vector<double> roots(2);
+    solveQuadratic(a, b, c, roots);
+    ASSERT_APPROX_EQUAL(roots[0], 5.0 / 2.0, 0.001);
+    ASSERT_APPROX_EQUAL(roots[1], -3.0, 0.001);
+
+}
+
 static void testNormCdf() {
     
     // test bounds
@@ -237,5 +283,8 @@ void testMatlib() {
 
     setDebugEnabled(true);
     TEST(testMean);
+
+    setDebugEnabled(true);
+    TEST(testStandardDeviation);
 
 }

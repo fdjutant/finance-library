@@ -51,9 +51,6 @@ int main() {
     // Test scratch
     //printNumber();
     //printVector();
-    
-
-
 
     // Black-Scholes pricing
     /*double strike = 100.0;
