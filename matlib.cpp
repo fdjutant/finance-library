@@ -4,6 +4,39 @@
 using namespace std;
 
 /*
+   Find max and min from a vector
+*/
+double min(const vector<double>& x) {
+    
+    int n = (int)x.size();
+    ASSERT(n > 0);
+
+    double temp = x[0];
+    for (int i = 1; i < n; i++) {
+        if (x[i] < temp) {
+            temp = x[i];
+        }
+    }
+
+    return temp;
+}
+
+double max(const vector<double>& x) {
+    
+    int n = (int)x.size();
+    ASSERT(n > 0);
+
+    double temp = x[0];
+    for (int i = 1; i < n; i++) {
+        if (x[i] > temp) {
+            temp = x[i];
+        }
+    }
+
+    return temp;
+}
+
+/*
    Compute sum, mean, standard deviation
 */
 double sum(const vector<double>& x) {
@@ -38,12 +71,13 @@ double standardDeviation(const vector<double>& x, bool population) {
         sum += pow((x[i] - meanValue),2);
     }
     if (population) {
+        ASSERT(Nsize > 0);
         return sqrt(sum / Nsize);
     }
     else {
+        ASSERT(Nsize-1 > 0);
         return sqrt(sum / (Nsize - 1));
     }
-
 }
 
 /*
@@ -174,10 +208,33 @@ double blackScholesPutPrice(double K, double T, double S, double sigma, double r
 ///     Testing     /////
 /////////////////////////
 
+// Generate a vector
+static void genVector(vector<double>& v) {
+    v.push_back(-3.0);
+    v.push_back(-2.0);
+    v.push_back(-1.0);
+    v.push_back(0.0);
+    v.push_back(1.0);
+    v.push_back(2.0);
+    v.push_back(3.0);
+}
+
+static void testMinMax() {
+
+    vector<double> v;
+    genVector(v);
+
+    ASSERT_APPROX_EQUAL(min(v), -3.0, 0.001);
+
+    ASSERT_APPROX_EQUAL(max(v), 3.0, 0.001);
+
+}
+
 static void testStandardDeviation() {
 
     // test specific values
-    vector<double> x = { -3.0, -2.0, -1.0, 0, 1.0, 2.0, 3.0 };
+    vector<double> x;
+    genVector(x);
 
     ASSERT_APPROX_EQUAL(standardDeviation(x, true), 2.0, 0.001);
     ASSERT_APPROX_EQUAL(standardDeviation(x, false), sqrt(28.0/6.0), 0.001);
@@ -187,7 +244,8 @@ static void testStandardDeviation() {
 static void testMean() {
 
     // test specific values
-    vector<double> x = { -3.0, -2.0, -1.0, 0, 1.0, 2.0, 3.0 };
+    vector<double> x;
+    genVector(x);
     double meanValue = mean(x);
     ASSERT_APPROX_EQUAL(meanValue, 0.0, 0.001);
 }
@@ -286,5 +344,8 @@ void testMatlib() {
 
     setDebugEnabled(true);
     TEST(testStandardDeviation);
+
+    setDebugEnabled(true);
+    TEST(testMinMax);
 
 }
