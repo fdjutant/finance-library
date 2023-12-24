@@ -2,6 +2,19 @@
 #include "stdafx.h"
 static const double PI = 3.14159265358979;
 
+
+/*
+	Generate a random sampling that follows a uniform distribution and normal distribution
+*/
+std::vector<double> randuniform(int n);
+std::vector<double> randn(int n);
+
+/*
+	Find max and min of a vector
+*/
+double min(const std::vector<double>& x);
+double max(const std::vector<double>& x);
+
 /*
 	Compute sum, mean, std of a vector
 */

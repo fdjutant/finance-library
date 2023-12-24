@@ -4,6 +4,25 @@
 using namespace std;
 
 /*
+    Generate a random sampling that follows a uniform distribution and normal distribution
+*/
+vector<double> randuniform(int n) {
+    vector<double> x(n);
+    for (int i = 0; i < n; i++) {
+        x[i] = (rand() + 1.0) / (RAND_MAX + 1.0);
+    }
+    return x;
+}
+
+vector<double> randn(int n) {
+    vector<double> x = randuniform(n);
+    for (int i = 0; i < n; i++){
+        x[i] = normInv(x[i]);
+    }
+    return x;
+}
+
+/*
    Find max and min from a vector
 */
 double min(const vector<double>& x) {
@@ -59,7 +78,7 @@ double mean(const vector<double>& x) {
 
 double standardDeviation(const vector<double>& x, bool population) {
     
-    INFO(population);
+    DEBUG_PRINT("population = " << population);
     ASSERT((population == 0) || (population == 1));
 
     int Nsize = (int)x.size();
@@ -219,6 +238,22 @@ static void genVector(vector<double>& v) {
     v.push_back(3.0);
 }
 
+static void testRandn() {
+
+    int n = 1000;
+
+    ASSERT_APPROX_EQUAL(mean(randn(n)), 0.0, 0.1);
+
+}
+
+static void testRanduniform() {
+    
+    int n = 1000;
+
+    ASSERT_APPROX_EQUAL(mean(randuniform(n)), 0.5, 0.1);
+
+}
+
 static void testMinMax() {
 
     vector<double> v;
@@ -261,8 +296,8 @@ static void testSolveQuadratic() {
     // without vector
     double x1 = 0.0, x2 = 0.0;
     solveQuadratic_NoVector(a, b, c, x1, x2);
-    INFO(x1);
-    INFO(x2);
+    DEBUG_PRINT("x1 = " << x1 << "\n");
+    DEBUG_PRINT("x2 = " << x2 << "\n");
     ASSERT_APPROX_EQUAL(x1, 5.0 / 2.0, 0.001);
     ASSERT_APPROX_EQUAL(x2, -3.0, 0.001);
 
@@ -339,13 +374,19 @@ void testMatlib() {
     setDebugEnabled(false);
     TEST(testSolveQuadratic);
 
-    setDebugEnabled(true);
+    setDebugEnabled(false);
     TEST(testMean);
 
-    setDebugEnabled(true);
+    setDebugEnabled(false);
     TEST(testStandardDeviation);
 
-    setDebugEnabled(true);
+    setDebugEnabled(false);
     TEST(testMinMax);
+
+    setDebugEnabled(true);
+    TEST(testRanduniform);
+
+    setDebugEnabled(false);
+    TEST(testRandn);
 
 }
