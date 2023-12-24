@@ -4,6 +4,38 @@
 using namespace std;
 
 /*
+    Box-Muller algorithm
+*/
+vector<double> randnBoxMuller(int N) {
+
+    vector<double> x(N);
+    int K = (int)round(N/2);
+    int i = 0;
+    while (K > 0){
+        
+        // generate a pair sampled from a uniform dist
+        vector<double> u = randuniform(2);
+
+        // find a pair sampled from normal dist
+        double n1 = sqrt(-2 * log(u[0])) * cos(2 * PI * u[1]);
+        double n2 = sqrt(-2 * log(u[0])) * sin(2 * PI * u[1]);
+
+        // take only n1 in case N is an odd value
+        if (N % 2 == 1 && K == 1) {
+            x[i] = n1;
+        }
+        else {
+            x[i] = n1;
+            x[i + 1] = n2;
+        }
+        K--;
+        i = i + 2; 
+    }    
+
+    return x;
+}
+
+/*
     Generate a random sampling that follows a uniform distribution and normal distribution
 */
 vector<double> randuniform(int n) {
@@ -238,18 +270,27 @@ static void genVector(vector<double>& v) {
     v.push_back(3.0);
 }
 
-static void testRandn() {
+static void testRandnBoxMuller() {
 
     int n = 1000;
-
-    ASSERT_APPROX_EQUAL(mean(randn(n)), 0.0, 0.1);
+    vector<double> x = randnBoxMuller(n);
+    ASSERT_APPROX_EQUAL(mean(x), 0.0, 0.1);
+    ASSERT_APPROX_EQUAL(standardDeviation(x, true), 1.0, 0.1);
 
 }
 
-static void testRanduniform() {
-    
-    int n = 1000;
+static void testRandn() {
 
+    int n = 1000;
+    vector<double> x = randn(n);
+
+    ASSERT_APPROX_EQUAL(mean(x), 0.0, 0.1);
+    ASSERT_APPROX_EQUAL(standardDeviation(x, true), 1.0, 0.1);
+}
+
+static void testRanduniform() {
+   
+    int n = 1000;
     ASSERT_APPROX_EQUAL(mean(randuniform(n)), 0.5, 0.1);
 
 }
@@ -383,10 +424,13 @@ void testMatlib() {
     setDebugEnabled(false);
     TEST(testMinMax);
 
-    setDebugEnabled(true);
+    setDebugEnabled(false);
     TEST(testRanduniform);
 
     setDebugEnabled(false);
     TEST(testRandn);
+
+    setDebugEnabled(false);
+    TEST(testRandnBoxMuller);
 
 }
