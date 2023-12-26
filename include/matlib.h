@@ -2,6 +2,10 @@
 #include "stdafx.h"
 static const double PI = 3.14159265358979;
 
+/*
+	Generate a vector with equi-distant between elements
+*/
+std::vector<double> linspace(double startPoint, double finalPoint, double N);
 
 /*
 	Generate a random sampling that follows a uniform distribution and normal distribution

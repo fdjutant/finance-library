@@ -1,6 +1,7 @@
 #include "charts.h"
 #include "stdafx.h"
 #include "testing.h"
+#include "matlib.h"
 using namespace std;
 
 static void writeTopBoilerPlateOfLineChart(ostream& out) {
@@ -53,7 +54,7 @@ static void generateFixedLineChart() {
 }
 
 
-// Pie Chart
+// PIE CHART
 static void writeTopBoilerPlateOfPieChar(ostream& out) {
     out << "<html>\n";
     out << "<head>\n";
@@ -99,6 +100,26 @@ static void generateFixedPieChart() {
     writeBottomBoilerPlateOfPieChar(out);
 }
 
+static void writeLineChartData(ostream& out, const vector<double>& x, const vector<double>& y) {
+    int numPoints = (int)x.size();
+    ASSERT((int)x.size() == (int)y.size());
+    
+    // start writing to ostream
+    out << "data.addColumn('number', 'X')\n";
+    out << "data.addColumn('number', 'f(x) = x*x')\n";
+    out << "data.addRows([\n";
+    for (int i = 0; i < numPoints; i++) {
+
+        if (i != numPoints - 1) {
+            out << "[" << x[i] << ", " << y[i] << "], ";
+        }
+        else {
+            out << "[" << x[i] << ", " << y[i] << "]\n";
+        }
+    }
+    out << "])\n";
+}
+
 static void writePieChartData(ostream& out, const vector<string>& labels, const vector<double>& values) {
     int nLabels = (int)labels.size();
     for (int i = 0; i < nLabels; i++) {
@@ -118,10 +139,36 @@ static void writePieChartData(ostream& out, const vector<string>& labels, const 
 ///     Testing     /////
 /////////////////////////
 
+static void testWriteLineChartData() {
+
+    // generate output from the function
+    vector<double> x(3), y(3);
+    for (int i = 0; i < 3; i++) {
+        x[i] = i;
+        y[i] = i * i;
+    }
+    stringstream out;
+    writeLineChartData(out, x, y);
+    string outputString = out.str();
+    DEBUG_PRINT("outputString\n" << outputString);
+
+    // generate expected output
+    stringstream expected;
+    expected << "data.addColumn('number', 'X')\n";
+    expected << "data.addColumn('number', 'f(x) = x*x')\n";
+    expected << "data.addRows([\n";
+    expected << "[0, 0], [1, 1], [2, 4]\n";
+    expected << "])\n";
+    string expectedStr = expected.str();
+    DEBUG_PRINT("expectedStr\n" << expectedStr);
+
+    ASSERT(outputString == expectedStr);
+
+}
+
 static void testWritePieChartData() {
     
     // generate output from the function
-    stringstream out;
     vector<string> labels(3);
     vector<double> values(3);
     for (int i = 0; i < 3; i++) {
@@ -131,6 +178,7 @@ static void testWritePieChartData() {
         INFO(labels[i]);
         values[i] = (double)i;
     }
+    stringstream out;
     writePieChartData(out, labels, values);
     string outString = out.str();
 
@@ -143,10 +191,12 @@ static void testWritePieChartData() {
     ASSERT(outString == expectedStr);
 }
 
-void testCharts() {
-    TEST(generateFixedPieChart);
-    TEST(testWritePieChartData);
-    TEST(generateFixedLineChart);
+void lineChart(const string& filename, const vector<double>& x, const vector<double>& y) {
+    ofstream out;
+    out.open(filename.c_str());
+    writeTopBoilerPlateOfLineChart(out);
+    writeLineChartData(out, x, y);
+    writeBottomBoilerPlateOfLineChart(out);
 }
 
 void pieChart(const string& filename, const vector<string>& labels, const vector<double>& values) {
@@ -157,4 +207,19 @@ void pieChart(const string& filename, const vector<string>& labels, const vector
     writePieChartData(out, labels, values);
     writeBottomBoilerPlateOfPieChar(out);
 
+}
+
+
+void testCharts() {
+    setDebugEnabled(false);
+    TEST(generateFixedPieChart);
+
+    setDebugEnabled(false);
+    TEST(testWritePieChartData);
+    
+    setDebugEnabled(false);
+    TEST(generateFixedLineChart);
+    
+    setDebugEnabled(true);
+    TEST(testWriteLineChartData);
 }

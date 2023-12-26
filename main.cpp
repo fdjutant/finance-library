@@ -8,9 +8,19 @@ using namespace std;
 int main() {
 
     // Perform unit testing
-    testMatlib();
+    //testMatlib();
     //testGeometry();
-    //testCharts();   
+    testCharts();
+
+    // Generate a line chart
+    // y = x^2
+    int numPoints = 1000;
+    vector<double> x = linspace(0, 5, numPoints);
+    vector<double> y(numPoints);
+    for (int i = 0; i < numPoints; i++) {
+        y[i] = x[i] * x[i];
+    }
+    lineChart("./outputFiles/theLineChart.html", x, y);
 
     // Generate a pie chart
     //vector<string> activity = {"Swimming", "Coding", "Working", "Cooking", "Sleeping"};
