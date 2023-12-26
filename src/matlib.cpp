@@ -6,16 +6,18 @@ using namespace std;
 /*
     Generate equally spaced vector
 */
-vector<double> linspace(double min, double max, double N) {
+vector<double> linspace(double startPoint, double finalPoint, double N) {
     
-    ASSERT(N != 0);
-    ASSERT(max > min);
+    ASSERT(N >= 2);
 
-    vector<double> x(N);
-    x[0] = min;
-    for (int i = 0; i < N; i++) {
-        x[i] = (double)(i / N) * x[0];
+    vector<double> x(N, 0.0);
+    x[0] = startPoint; 
+    double inc = (finalPoint - startPoint) / (N - 1);
+    for (int i = 1; i < N; i++) {
+        x[i] = x[i-1] + inc;
     }
+
+    return x;
 }
 
 /*
@@ -270,10 +272,6 @@ double blackScholesPutPrice(double K, double T, double S, double sigma, double r
     return putPriceOption;
 }
 
-/////////////////////////
-///     Testing     /////
-/////////////////////////
-
 // Generate a vector
 static void genVector(vector<double>& v) {
     v.push_back(-3.0);
@@ -283,6 +281,24 @@ static void genVector(vector<double>& v) {
     v.push_back(1.0);
     v.push_back(2.0);
     v.push_back(3.0);
+}
+
+/////////////////////////
+///     Testing     /////
+/////////////////////////
+
+static void testLinspace() {
+    vector<double> x = linspace(0, 1, 10);
+
+    DEBUG_PRINT("x.size() = " << (int)x.size());
+    ASSERT((int)x.size() == 10);
+
+    DEBUG_PRINT("x[0] = " << x[0]);
+    ASSERT_APPROX_EQUAL(x[0], 0.0, 0.0001);
+    
+    DEBUG_PRINT("x[9] = " << x[9]);
+    ASSERT_APPROX_EQUAL(x[9], 1.0, 0.0001);
+
 }
 
 static void testRandnBoxMuller() {
@@ -316,7 +332,6 @@ static void testMinMax() {
     genVector(v);
 
     ASSERT_APPROX_EQUAL(min(v), -3.0, 0.001);
-
     ASSERT_APPROX_EQUAL(max(v), 3.0, 0.001);
 
 }
@@ -447,5 +462,8 @@ void testMatlib() {
 
     setDebugEnabled(false);
     TEST(testRandnBoxMuller);
+
+    setDebugEnabled(true);
+    TEST(testLinspace);
 
 }
