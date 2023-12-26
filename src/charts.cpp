@@ -3,6 +3,57 @@
 #include "testing.h"
 using namespace std;
 
+static void writeTopBoilerPlateOfLineChart(ostream& out) {
+    out << "<html>\n";
+    out << "<head>\n";
+    out << "<script type = \"text/javascript\" src = \"https://www.gstatic.com/charts/loader.js\"></script>\n";
+    out << "<script type = \"text/javascript\">\n";
+    out << "google.charts.load('current', {packages: ['corechart', 'line'] });\n";
+    out << "google.charts.setOnLoadCallback(drawBackgroundColor);\n";
+    out << "function drawBackgroundColor() {\n";
+    out << "var data = new google.visualization.DataTable();\n";
+}
+
+static void writeBottomBoilerPlateOfLineChart(ostream& out) {
+    out << "var options = {\n";
+    out << "hAxis: {\n";
+    out << "title: 'Time'\n";
+    out << "},\n";
+    out << "vAxis : {\n";
+    out << "title: 'Popularity'\n";
+    out << "},\n";
+    out << "backgroundColor : '#f1f8e9'\n";
+    out << "};\n";
+
+    out << "var chart = new google.visualization.LineChart(document.getElementById('chart_div'));\n";
+    out << "chart.draw(data, options);\n";
+    out << "}\n";
+    out << "</script>\n";
+    out << "</head>\n";
+    out << "<body>\n";
+    out << "<div id = \"chart_div\" style = \"width: 1000px; height: 500px\"></div>\n";
+    out << "</body>\n";
+}
+
+static void writeFixedLineChartData(ostream& out) {
+    out << "data.addColumn('number', 'X')\n";
+    out << "data.addColumn('number', 'Cats')\n";
+
+    out << "data.addRows([\n";
+    out << "[0, 0], [1, 10], [2, 23], [3, 17], [4, 18], [5, 9], [6, 11], [7, 27], [8, 33], [9, 40], [10, 32], [11, 35], [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48], [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57], [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53], [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65], [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65], [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70], [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70], [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68], [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69], [66, 70], [67, 72], [68, 75], [69, 80]\n";
+    out << "])\n";
+}
+
+static void generateFixedLineChart() {
+    ofstream out;
+    out.open("./outputFiles/fixedLineChart.html");
+    writeTopBoilerPlateOfLineChart(out);
+    writeFixedLineChartData(out);
+    writeBottomBoilerPlateOfLineChart(out);
+}
+
+
+// Pie Chart
 static void writeTopBoilerPlateOfPieChar(ostream& out) {
     out << "<html>\n";
     out << "<head>\n";
@@ -42,7 +93,7 @@ static void writeBottomBoilerPlateOfPieChar(ostream& out) {
 
 static void generateFixedPieChart() {
     ofstream out;
-    out.open("./outputFiles/fixedChart.html");
+    out.open("./outputFiles/fixedPieChart.html");
     writeTopBoilerPlateOfPieChar(out);
     writeFixedPieChartData(out);
     writeBottomBoilerPlateOfPieChar(out);
@@ -62,6 +113,10 @@ static void writePieChartData(ostream& out, const vector<string>& labels, const 
         }
     }
 }
+
+/////////////////////////
+///     Testing     /////
+/////////////////////////
 
 static void testWritePieChartData() {
     
@@ -91,6 +146,7 @@ static void testWritePieChartData() {
 void testCharts() {
     TEST(generateFixedPieChart);
     TEST(testWritePieChartData);
+    TEST(generateFixedLineChart);
 }
 
 void pieChart(const string& filename, const vector<string>& labels, const vector<double>& values) {

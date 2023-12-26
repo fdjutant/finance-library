@@ -4,6 +4,21 @@
 using namespace std;
 
 /*
+    Generate equally spaced vector
+*/
+vector<double> linspace(double min, double max, double N) {
+    
+    ASSERT(N != 0);
+    ASSERT(max > min);
+
+    vector<double> x(N);
+    x[0] = min;
+    for (int i = 0; i < N; i++) {
+        x[i] = (double)(i / N) * x[0];
+    }
+}
+
+/*
     Box-Muller algorithm
 */
 vector<double> randnBoxMuller(int N) {

@@ -8,9 +8,9 @@ using namespace std;
 int main() {
 
     // Perform unit testing
-    testMatlib();
+    //testMatlib();
     //testGeometry();
-    //testCharts();   
+    testCharts();   
 
     // Generate a pie chart
     //vector<string> activity = {"Swimming", "Coding", "Working", "Cooking", "Sleeping"};
