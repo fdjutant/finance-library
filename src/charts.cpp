@@ -18,10 +18,10 @@ static void writeTopBoilerPlateOfLineChart(ostream& out) {
 static void writeBottomBoilerPlateOfLineChart(ostream& out) {
     out << "var options = {\n";
     out << "hAxis: {\n";
-    out << "title: 'Time'\n";
+    out << "title: 'x'\n";
     out << "},\n";
     out << "vAxis : {\n";
-    out << "title: 'Popularity'\n";
+    out << "title: 'y'\n";
     out << "},\n";
     out << "backgroundColor : '#f1f8e9'\n";
     out << "};\n";
@@ -106,7 +106,7 @@ static void writeLineChartData(ostream& out, const vector<double>& x, const vect
     
     // start writing to ostream
     out << "data.addColumn('number', 'X')\n";
-    out << "data.addColumn('number', 'f(x) = x*x')\n";
+    out << "data.addColumn('number', 'f(x)')\n";
     out << "data.addRows([\n";
     for (int i = 0; i < numPoints; i++) {
 
@@ -155,7 +155,7 @@ static void testWriteLineChartData() {
     // generate expected output
     stringstream expected;
     expected << "data.addColumn('number', 'X')\n";
-    expected << "data.addColumn('number', 'f(x) = x*x')\n";
+    expected << "data.addColumn('number', 'f(x)')\n";
     expected << "data.addRows([\n";
     expected << "[0, 0], [1, 1], [2, 4]\n";
     expected << "])\n";
@@ -220,6 +220,6 @@ void testCharts() {
     setDebugEnabled(false);
     TEST(generateFixedLineChart);
     
-    setDebugEnabled(true);
+    setDebugEnabled(false);
     TEST(testWriteLineChartData);
 }

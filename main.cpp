@@ -13,14 +13,28 @@ int main() {
     testCharts();
 
     // Generate a line chart
-    // y = x^2
-    int numPoints = 1000;
-    vector<double> x = linspace(0, 5, numPoints);
-    vector<double> y(numPoints);
-    for (int i = 0; i < numPoints; i++) {
-        y[i] = x[i] * x[i];
+    // Price of a call option against the current stock price using Equation(A.6).Assume the volatility (sigma) is 0.2, the strike price (K) is 100, the time to maturity (T) is 1.0, and the risk - free interest rate (r) is 0.05
+    double strikePrice = 100;
+    double volatility = 0.1;
+    double riskFreeInterestRate = 0.05;
+    double timeToMaturity = 1.0;
+
+    int timePoints = 1000;
+    vector<double> S = linspace(100, 150, timePoints);
+    vector<double> C(timePoints);
+    for (int i = 0; i < timePoints; i++) {
+        C[i] = blackScholesCallPrice(strikePrice, timeToMaturity, S[i], volatility, riskFreeInterestRate);
     }
-    lineChart("./outputFiles/theLineChart.html", x, y);
+    lineChart("./outputFiles/blackScholesCallPrice.html", S, C);
+    
+    // y = x^2
+    //int numPoints = 1000;
+    //vector<double> x = linspace(0, 5, numPoints);
+    //vector<double> y(numPoints);
+    //for (int i = 0; i < numPoints; i++) {
+    //    y[i] = x[i] * x[i];
+    //}
+    //lineChart("./outputFiles/theLineChart.html", x, y);
 
     // Generate a pie chart
     //vector<string> activity = {"Swimming", "Coding", "Working", "Cooking", "Sleeping"};

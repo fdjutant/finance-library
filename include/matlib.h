@@ -48,6 +48,11 @@ double normInv(double x);
 double blackScholesPutPrice(double strikePrice, double timeToMaturity, double spotPrice, double volatility, double riskFreeInterestRate);
 
 /*
+	Black-Scholes Call Price
+*/
+double blackScholesCallPrice(double strikePrice, double timeToMaturity, double spotPrice, double volatility, double riskFreeInterestRate);
+
+/*
 	Perform unit testing
 */
 void testMatlib();

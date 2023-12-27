@@ -272,6 +272,22 @@ double blackScholesPutPrice(double K, double T, double S, double sigma, double r
     return putPriceOption;
 }
 
+double blackScholesCallPrice(double K, double T, double S,double sigma, double r) {
+
+    double denominator = sigma * sqrt(T);
+    double numerator = log(S / K) +
+        (r + 0.5 * sigma * sigma) * T;
+
+    double d1 = numerator / denominator;
+    double d2 = d1 - denominator;
+
+    double callPriceOption = normcdf(d1) * S -
+        normcdf(d2) * K * exp(-r * T);
+
+    return callPriceOption;
+}
+
+
 // Generate a vector
 static void genVector(vector<double>& v) {
     v.push_back(-3.0);
@@ -463,7 +479,7 @@ void testMatlib() {
     setDebugEnabled(false);
     TEST(testRandnBoxMuller);
 
-    setDebugEnabled(true);
+    setDebugEnabled(false);
     TEST(testLinspace);
 
 }
