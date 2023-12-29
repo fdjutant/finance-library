@@ -4,6 +4,40 @@
 using namespace std;
 
 /*
+    Generate a percentile given a vector
+*/
+double prctile(const vector<double>& x, double p) {
+    
+    int n = (int)x.size();
+    vector<double> sorted = x;
+    sort(sorted.begin(), sorted.end());
+
+    // check which index(es) correspond to percentage p
+    int indexBelow = (int) ((p / 100.0) * n - 0.5);  
+    int indexAbove = indexBelow + 1;
+     
+    // find the two values
+    double valueBelow = sorted[indexBelow];
+    double valueAbove = sorted[indexAbove];
+
+    // check the percentages corresponding to the indexes
+    double percentageBelow = (indexBelow + 0.5) / n * 100;
+    double percentageAbove = (indexAbove + 0.5) / n * 100;
+
+    // return the value given the percentage
+    if (p <= percentageBelow) {
+        return valueBelow;
+    }
+    else if (p >= percentageAbove) {
+        return valueAbove;
+    }
+    double correction = (p - percentageBelow) * (valueAbove - valueBelow) / (percentageAbove - percentageBelow);
+    return valueBelow + correction;
+
+}
+
+
+/*
     Generate equally spaced vector
 */
 vector<double> linspace(double startPoint, double finalPoint, double N) {

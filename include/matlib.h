@@ -3,6 +3,11 @@
 static const double PI = 3.14159265358979;
 
 /*
+	Generate a percentile given a vector
+*/
+double prctile(const std::vector<double>& vecInput, double percentage);
+
+/*
 	Generate a vector with equi-distant between elements
 */
 std::vector<double> linspace(double startPoint, double finalPoint, double N);
