@@ -36,7 +36,6 @@ double prctile(const vector<double>& x, double p) {
 
 }
 
-
 /*
     Generate equally spaced vector
 */
