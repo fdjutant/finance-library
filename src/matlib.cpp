@@ -13,10 +13,9 @@ double prctile(const vector<double>& x, double p) {
     sort(sorted.begin(), sorted.end());
 
     // check the index corresponding to the percentage p
-    double index = (p / 100.0) * (n - 1);
-    if (floor(index) - index <= 0.01) {
-        cout << "test";
-        return sorted[index];
+    double index = (p / 100.0) * (n - 1); // (n-1) due to C++ indexing starting from 0
+    if (abs(int(index) - index) <= 0.0001) {
+        return sorted[index]; // if the index returns integer
     }
     else {
         int lowerIndex = (int)floor(index);
@@ -26,7 +25,7 @@ double prctile(const vector<double>& x, double p) {
         double lowerValue = sorted[lowerIndex];
         double upperValue = sorted[upperIndex];
 
-        // adjust with a correction factor, which is scaled by the percentage point
+        // add interpolation factor
         return lowerValue + (upperValue - lowerValue) * (index - lowerIndex);
     }
     
@@ -337,9 +336,8 @@ static void testPrctile() {
     ASSERT_APPROX_EQUAL(prctile(v, 100.0), 9.0, 0.001);
     ASSERT_APPROX_EQUAL(prctile(v, 0.0), 1.0, 0.001);
     ASSERT_APPROX_EQUAL(prctile(v, 50.0), 5.0, 0.001);
-    ASSERT_APPROX_EQUAL(prctile(v, 17.0), 1.7, 0.001);
-    ASSERT_APPROX_EQUAL(prctile(v, 62.0), 6.2, 0.001);
-
+    ASSERT_APPROX_EQUAL(prctile(v, 17.0), 2.36, 0.001);
+    ASSERT_APPROX_EQUAL(prctile(v, 62.0), 5.96, 0.001);
 }
 
 
@@ -511,6 +509,6 @@ void testMatlib() {
 
     //TEST(testLinspace);
 
-    setDebugEnabled(false);
+    setDebugEnabled(true);
     TEST(testPrctile);
 }
