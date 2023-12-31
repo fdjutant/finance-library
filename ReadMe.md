@@ -13,7 +13,7 @@
  - standardDeviation: compute standard deviation, either by population or sample, of a vector.
  - min: find the minimum value from a vector.
  - max: find the maximum value from a vector.
- - prctile: generate the value  from a vector given the percentile requested (TO DO: add a unit testing).
+ - prctile: generate a value from a vector given a percentile requested.
 
 [charts.h](https://github.com/fdjutant/finance-library/blob/master/include/charts.h)
  - testCharts: perform unit testings for functions in the library.
