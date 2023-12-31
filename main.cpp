@@ -8,9 +8,9 @@ using namespace std;
 int main() {
 
     // Perform unit testing
-    //testMatlib();
+    testMatlib();
     //testGeometry();
-    testCharts();
+    //testCharts();
 
     // Generate a line chart
     // Price of a call option against the current stock price using Equation(A.6).Assume the volatility (sigma) is 0.2, the strike price (K) is 100, the time to maturity (T) is 1.0, and the risk - free interest rate (r) is 0.05

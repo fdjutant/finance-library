@@ -1,7 +1,7 @@
 # Some finance library
 
 [matlib.h](https://github.com/fdjutant/finance-library/blob/master/include/matlib.h)
- - testMatlib: perform unit testings for the functions in the library.
+ - testMatlib: perform unit testings for functions in the library.
  - blackScholesCallPrice: compute Call price using Black Scholes model.
  - blackScholesPutPrice: compute Put price using Black Scholes model.
  - normcdf: compute the Normal distribution cumulative distributive function (CDF)
@@ -13,10 +13,10 @@
  - standardDeviation: compute standard deviation, either by population or sample, of a vector.
  - min: find the minimum value from a vector.
  - max: find the maximum value from a vector.
- - prctile: generate the value  from a vector given the percentile requested (pending unit testing).
+ - prctile: generate the value  from a vector given the percentile requested (TO DO: add a unit testing).
 
 [charts.h](https://github.com/fdjutant/finance-library/blob/master/include/charts.h)
- - testCharts: perform unit testings for the functions in the library.
+ - testCharts: perform unit testings for functions in the library.
  - pieChart: generate an HTML pie chart (using Google Chart Template) given a paired-vector of labels and values.
  - lineChart: generate an HTML line chart (using Google Chart Template) given a paired-vector of x-and-y values.
 

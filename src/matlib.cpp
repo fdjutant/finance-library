@@ -7,33 +7,29 @@ using namespace std;
     Generate a percentile given a vector
 */
 double prctile(const vector<double>& x, double p) {
-    
+
     int n = (int)x.size();
     vector<double> sorted = x;
     sort(sorted.begin(), sorted.end());
 
-    // check which index(es) correspond to percentage p
-    int indexBelow = (int) ((p / 100.0) * n - 0.5);  
-    int indexAbove = indexBelow + 1;
-     
-    // find the two values
-    double valueBelow = sorted[indexBelow];
-    double valueAbove = sorted[indexAbove];
-
-    // check the percentages corresponding to the indexes
-    double percentageBelow = (indexBelow + 0.5) / n * 100;
-    double percentageAbove = (indexAbove + 0.5) / n * 100;
-
-    // return the value given the percentage
-    if (p <= percentageBelow) {
-        return valueBelow;
+    // check the index corresponding to the percentage p
+    double index = (p / 100.0) * (n - 1);
+    if (floor(index) - index <= 0.01) {
+        cout << "test";
+        return sorted[index];
     }
-    else if (p >= percentageAbove) {
-        return valueAbove;
-    }
-    double correction = (p - percentageBelow) * (valueAbove - valueBelow) / (percentageAbove - percentageBelow);
-    return valueBelow + correction;
+    else {
+        int lowerIndex = (int)floor(index);
+        int upperIndex = lowerIndex + 1;
 
+        // find the two values
+        double lowerValue = sorted[lowerIndex];
+        double upperValue = sorted[upperIndex];
+
+        // adjust with a correction factor, which is scaled by the percentage point
+        return lowerValue + (upperValue - lowerValue) * (index - lowerIndex);
+    }
+    
 }
 
 /*
@@ -336,6 +332,17 @@ static void genVector(vector<double>& v) {
 ///     Testing     /////
 /////////////////////////
 
+static void testPrctile() {
+    vector<double> v = { 1, 5, 3, 9, 7 };
+    ASSERT_APPROX_EQUAL(prctile(v, 100.0), 9.0, 0.001);
+    ASSERT_APPROX_EQUAL(prctile(v, 0.0), 1.0, 0.001);
+    ASSERT_APPROX_EQUAL(prctile(v, 50.0), 5.0, 0.001);
+    ASSERT_APPROX_EQUAL(prctile(v, 17.0), 1.7, 0.001);
+    ASSERT_APPROX_EQUAL(prctile(v, 62.0), 6.2, 0.001);
+
+}
+
+
 static void testLinspace() {
     vector<double> x = linspace(0, 1, 10);
 
@@ -481,38 +488,29 @@ static void testblackScholesPutPrice() {
 }
 
 void testMatlib() {
-    
-    setDebugEnabled(false);
-    TEST( testNormCdf );
+
+    //TEST( testNormCdf );
+
+    //TEST(testNormInv );
+
+    //TEST(testblackScholesPutPrice);
+
+    //TEST(testSolveQuadratic);
+
+    //TEST(testMean);
+
+    //TEST(testStandardDeviation);
+
+    //TEST(testMinMax);
+
+    //TEST(testRanduniform);
+
+    //TEST(testRandn);
+
+    //TEST(testRandnBoxMuller);
+
+    //TEST(testLinspace);
 
     setDebugEnabled(false);
-    TEST( testNormInv );
-
-    setDebugEnabled(false);
-    TEST(testblackScholesPutPrice);
-
-    setDebugEnabled(false);
-    TEST(testSolveQuadratic);
-
-    setDebugEnabled(false);
-    TEST(testMean);
-
-    setDebugEnabled(false);
-    TEST(testStandardDeviation);
-
-    setDebugEnabled(false);
-    TEST(testMinMax);
-
-    setDebugEnabled(false);
-    TEST(testRanduniform);
-
-    setDebugEnabled(false);
-    TEST(testRandn);
-
-    setDebugEnabled(false);
-    TEST(testRandnBoxMuller);
-
-    setDebugEnabled(false);
-    TEST(testLinspace);
-
+    TEST(testPrctile);
 }
