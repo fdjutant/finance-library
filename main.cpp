@@ -7,8 +7,17 @@ using namespace std;
 
 int main() {
 
+    // Test CartesianPoint class
+    CartesianPoint p;
+    p.x = 100;
+    p.y = 150;
+    cout << "Coordinates (" << p.x << ", " << p.y << ")\n";
+    p.x *= 2;
+    p.y *= 2;
+    cout << "Rescaled coordinates (" << p.x << ", " << p.y << ")\n";
+
     // Perform unit testing
-    testMatlib();
+    //testMatlib();
     //testGeometry();
     //testCharts();
 

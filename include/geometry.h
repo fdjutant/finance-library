@@ -2,6 +2,15 @@
 
 const double pi_value = 3.14159265358979;
 
+/*
+	Define a class for Cartesian points
+*/
+class CartesianPoint {
+public:
+	double x;
+	double y;
+};
+
 /**
  * Compute area of a circle
 **/
