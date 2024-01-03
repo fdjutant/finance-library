@@ -19,10 +19,7 @@ void efficientString();
 void writingOfstream();
 void testWriteHaiku();
 
-/**
-* function to convert polar to cartesian
-**/
-void testPolarToCartesian();
+
 
 /**
 * function to print next value

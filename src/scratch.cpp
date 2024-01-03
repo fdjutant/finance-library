@@ -103,22 +103,6 @@ void writingOfstream() {
 	out.close();
 }
 
-static void polarToCartesian(double r, double theta, double& x, double& y) {
-	x = r * cos(theta);
-	y = r * sin(theta);
-}
-
-void testPolarToCartesian() {
-	double PI = 3.14159265358979;
-	double r = 2.0;
-	double theta = PI / 2;
-	double x = 0.0, y = 0.0;
-	polarToCartesian(r, theta, x, y);
-	ASSERT_APPROX_EQUAL(x, 0.0, 0.001);
-	ASSERT_APPROX_EQUAL(y, 2.0, 0.001);
-	cout << "x = " << x << ", y = " << y << "\n";
-}
-
 void printNextValue2(int& x) {
 	x = x + 1;
 	cout << "B: value of x is " << x << "\n";

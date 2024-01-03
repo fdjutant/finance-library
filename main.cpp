@@ -18,7 +18,7 @@ int main() {
 
     // Perform unit testing
     //testMatlib();
-    //testGeometry();
+    testGeometry();
     //testCharts();
 
     // Generate a line chart
