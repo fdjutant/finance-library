@@ -1,6 +1,8 @@
 #include "matlib.h"
 #include "stdafx.h"
 #include "testing.h"
+#include "BlackScholesModel.h"
+#include "CallOption.h"
 using namespace std;
 
 

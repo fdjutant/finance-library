@@ -3,29 +3,6 @@
 static const double PI = 3.14159265358979;
 
 /*
-	A class for BlackScholesModel object
-*/
-class BlackScholesModel {
-public:
-	double stockPrice;
-	double volatility;
-	double riskFreeRate;
-	double date;
-};
-
-/*
-	A class for Call Option contracts
-*/
-class CallOption {
-public:
-	double strike;
-	double maturity;
-
-	double payoff(double stockAtMaturity) const;
-	double price(const BlackScholesModel& bsm) const;
-};
-
-/*
 	Generate a percentile given a vector
 */
 double prctile(const std::vector<double>& vecInput, double percentage);
