@@ -7,19 +7,19 @@ using namespace std;
 
 int main() {
 
-    // Test CartesianPoint class
-    CartesianPoint p;
-    p.x = 100;
-    p.y = 150;
-    cout << "Coordinates (" << p.x << ", " << p.y << ")\n";
-    p.x *= 2;
-    p.y *= 2;
-    cout << "Rescaled coordinates (" << p.x << ", " << p.y << ")\n";
-
     // Perform unit testing
-    //testMatlib();
-    testGeometry();
+    testMatlib();
+    //testGeometry();
     //testCharts();
+
+    // Check CartesianPoint class
+    //CartesianPoint p;
+    //p.x = 100;
+    //p.y = 150;
+    //cout << "Coordinates (" << p.x << ", " << p.y << ")\n";
+    //p.x *= 2;
+    //p.y *= 2;
+    //cout << "Rescaled coordinates (" << p.x << ", " << p.y << ")\n";
 
     // Generate a line chart
     // Price of a call option against the current stock price using Equation(A.6).Assume the volatility (sigma) is 0.2, the strike price (K) is 100, the time to maturity (T) is 1.0, and the risk - free interest rate (r) is 0.05
