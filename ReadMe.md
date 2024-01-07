@@ -1,5 +1,11 @@
 # Some finance library
 
+[CallOption.h](https://github.com/fdjutant/finance-library/blob/master/include/CallOption.h)
+An object for computing call option
+
+[BlackScholesModel.h](https://github.com/fdjutant/finance-library/blob/master/include/BlackScholesModel.h)
+An object for Black Scholes Model
+
 [matlib.h](https://github.com/fdjutant/finance-library/blob/master/include/matlib.h)
  - testMatlib: perform unit testings for functions in the library.
  - blackScholesCallPrice: compute Call price using Black Scholes model.
