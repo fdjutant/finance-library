@@ -55,7 +55,7 @@ static void generateFixedLineChart() {
 
 
 // PIE CHART
-static void writeTopBoilerPlateOfPieChar(ostream& out) {
+static void writeTopBoilerPlateOfPieChart(ostream& out) {
     out << "<html>\n";
     out << "<head>\n";
     out << "<script type = \"text/javascript\" src = \"https://www.gstatic.com/charts/loader.js\"></script>\n";
@@ -75,7 +75,7 @@ static void writeFixedPieChartData(ostream& out) {
     out << "['Sleep', 7]\n";
 }
 
-static void writeBottomBoilerPlateOfPieChar(ostream& out) {
+static void writeBottomBoilerPlateOfPieChart(ostream& out) {
     out << "]);\n";
     out << "var options = {\n";
     out << "title: 'My Daily Activities',\n";
@@ -95,9 +95,9 @@ static void writeBottomBoilerPlateOfPieChar(ostream& out) {
 static void generateFixedPieChart() {
     ofstream out;
     out.open("./outputFiles/fixedPieChart.html");
-    writeTopBoilerPlateOfPieChar(out);
+    writeTopBoilerPlateOfPieChart(out);
     writeFixedPieChartData(out);
-    writeBottomBoilerPlateOfPieChar(out);
+    writeBottomBoilerPlateOfPieChart(out);
 }
 
 static void writeLineChartData(ostream& out, const vector<double>& x, const vector<double>& y) {
@@ -203,9 +203,9 @@ void pieChart(const string& filename, const vector<string>& labels, const vector
     
     ofstream out;
     out.open(filename.c_str());
-    writeTopBoilerPlateOfPieChar(out);
+    writeTopBoilerPlateOfPieChart(out);
     writePieChartData(out, labels, values);
-    writeBottomBoilerPlateOfPieChar(out);
+    writeBottomBoilerPlateOfPieChart(out);
 
 }
 
