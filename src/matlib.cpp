@@ -1,6 +1,5 @@
 #include "matlib.h"
 #include "stdafx.h"
-#include "testing.h"
 #include "BlackScholesModel.h"
 #include "CallOption.h"
 using namespace std;
@@ -333,21 +332,6 @@ static void genVector(vector<double>& v) {
 ///     Testing     /////
 /////////////////////////
 
-static void testCallOptionPrice() {
-    CallOption callOption;
-    callOption.strike = 105.0;
-    callOption.maturity = 2.0;
-
-    BlackScholesModel bsm;
-    bsm.date = 1.0;
-    bsm.volatility = 0.1;
-    bsm.riskFreeRate = 0.05;
-    bsm.stockPrice = 100.0;
-
-    double price = callOption.price(bsm);
-    ASSERT_APPROX_EQUAL(price, 4.046, 0.001);
-}
-
 static void testPrctile() {
     vector<double> v = { 1, 5, 3, 9, 7 };
     ASSERT_APPROX_EQUAL(prctile(v, 100.0), 9.0, 0.001);
@@ -530,5 +514,4 @@ void testMatlib() {
 
     //TEST(testPrctile);
 
-    TEST(testCallOptionPrice);
 }

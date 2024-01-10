@@ -1,6 +1,5 @@
 #include "charts.h"
 #include "stdafx.h"
-#include "testing.h"
 #include "matlib.h"
 using namespace std;
 
@@ -214,12 +213,9 @@ void testCharts() {
     setDebugEnabled(false);
     TEST(generateFixedPieChart);
 
-    setDebugEnabled(false);
     TEST(testWritePieChartData);
     
-    setDebugEnabled(false);
     TEST(generateFixedLineChart);
     
-    setDebugEnabled(false);
     TEST(testWriteLineChartData);
 }

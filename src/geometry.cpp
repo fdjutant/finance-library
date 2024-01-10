@@ -1,6 +1,5 @@
 #include "geometry.h"
 #include "stdafx.h"
-#include "testing.h"
 using namespace std;
 
 CartesianPoint polarToCartesian(const PolarPoint& p){

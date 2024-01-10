@@ -2,9 +2,9 @@
 #include "BlackScholesModel.h"
 
 /*
-	A class for Call Option contracts
+	A call for Put Option contracts
 */
-class CallOption {
+class PutOption {
 public:
 	double strike;
 	double maturity;
@@ -13,4 +13,4 @@ public:
 	double price(const BlackScholesModel& bsm) const;
 };
 
-void testCallOption();
+void testPutOption();

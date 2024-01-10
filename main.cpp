@@ -3,14 +3,20 @@
 #include "geometry.h"
 #include "scratch.h"
 #include "charts.h"
+#include "PieChart.h"
+#include "CallOption.h"
+#include "PutOption.h"
 using namespace std;
 
 int main() {
 
     // Perform unit testing
-    testMatlib();
+    //testMatlib();
     //testGeometry();
     //testCharts();
+    //testPieChart();
+    testCallOption();
+    testPutOption();
 
     // Check CartesianPoint class
     //CartesianPoint p;

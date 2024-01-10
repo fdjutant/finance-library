@@ -12,3 +12,5 @@ private:
 	std::vector<std::string> labels;
 	std::vector<double> values;
 };
+
+void testPieChart();
