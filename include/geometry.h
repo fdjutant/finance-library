@@ -2,14 +2,18 @@
 
 const double pi_value = 3.14159265358979;
 
+// forward declaration: allow 
+class CartesianPoint;
+
 /*
-	A class for circle object
+	An object for CartesianPoint
 */
-class Circle {
+class CartesianPoint {
 public:
-	double radius;
-	double area() const;
-	double circumference() const;
+	double x;
+	double y;
+
+	double distanceTo(const CartesianPoint& p2) const;
 };
 
 /*
@@ -22,24 +26,23 @@ public:
 };
 
 /*
-	A class for Cartesian point object
+	A class for circle object
 */
-class CartesianPoint {
+class Circle {
 public:
-	double x;
-	double y;
+	double radius;
+	double area() const;
+	double circumference() const;
 };
 
-/*
-	Convert polar to Cartesian
-*/
-CartesianPoint polarToCartesian(const PolarPoint&);
-
+////////////////////////
+///// functions ////////
+////////////////////////
 
 /*
-	Convert polar to cartesian
+	Compute a perimeter of a triangle
 */
-void testPolarToCartesian();
+double perimeter(const CartesianPoint& p1, const CartesianPoint& p2, const CartesianPoint& p3);
 
 /**
  * Compute area of a circle
@@ -51,7 +54,13 @@ double area(double radius);
 **/
 double circumference(double radius);
 
+/*
+	Convert polar to Cartesian
+*/
+CartesianPoint polarToCartesian(const PolarPoint&);
+
+
 /**
- * Perform a unit testing 
+ * Unit testing 
 **/
 void testGeometry();

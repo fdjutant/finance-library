@@ -2,7 +2,7 @@
 #include "BlackScholesModel.h"
 
 /*
-	A call for Put Option contracts
+	An object for Put Option contracts
 */
 class PutOption {
 public:

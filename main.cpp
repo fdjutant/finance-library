@@ -13,12 +13,12 @@ int main() {
 
     // Perform unit testing
     //testMatlib();
-    //testGeometry();
+    testGeometry();
     //testCharts();
     //testPieChart();
     //testCallOption();
     //testPutOption();
-    testLineChart();
+    //testLineChart();
 
     // Check CartesianPoint class
     //CartesianPoint p;
