@@ -4,6 +4,7 @@
 #include "scratch.h"
 #include "charts.h"
 #include "PieChart.h"
+#include "LineChart.h"
 #include "CallOption.h"
 #include "PutOption.h"
 using namespace std;
@@ -15,8 +16,9 @@ int main() {
     //testGeometry();
     //testCharts();
     //testPieChart();
-    testCallOption();
-    testPutOption();
+    //testCallOption();
+    //testPutOption();
+    testLineChart();
 
     // Check CartesianPoint class
     //CartesianPoint p;
