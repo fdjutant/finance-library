@@ -2,6 +2,23 @@
 #include "stdafx.h"
 using namespace std;
 
+////////////////////////
+////// Constructor /////
+////////////////////////
+CartesianPoint::CartesianPoint() :
+	x(0.0),
+	y(0.0) {
+}
+PolarPoint::PolarPoint() :
+	r(0.0),
+	theta(0.0) {
+}
+Circle::Circle() :
+	radius(0.0) {
+
+}
+
+
 /*
 	Compute perimetry of a triangle
 */

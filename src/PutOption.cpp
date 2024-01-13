@@ -3,6 +3,11 @@
 #include "matlib.h"
 using namespace std;
 
+////////////////////////
+////// Constructor /////
+////////////////////////
+
+
 /*
 	Payoff function for PutOption object
 */

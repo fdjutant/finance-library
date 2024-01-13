@@ -20,6 +20,12 @@ int main() {
     //testPutOption();
     //testLineChart();
 
+    // Check error for unassigned variable
+    //double d;
+    //cout << "Value of d is " << d;
+    PolarPoint p;
+    cout << "Value of object p.r is " << p.r;
+
     // Check CartesianPoint class
     //CartesianPoint p;
     //p.x = 100;

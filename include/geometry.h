@@ -6,10 +6,11 @@ const double pi_value = 3.14159265358979;
 class CartesianPoint;
 
 /*
-	An object for CartesianPoint
+	An object for CartesianPoint and its constructor
 */
 class CartesianPoint {
 public:
+	CartesianPoint();
 	double x;
 	double y;
 
@@ -21,15 +22,18 @@ public:
 */
 class PolarPoint {
 public:
+	PolarPoint(); // declare default constructor
 	double r;
 	double theta;
 };
+
 
 /*
 	A class for circle object
 */
 class Circle {
 public:
+	Circle(); 
 	double radius;
 	double area() const;
 	double circumference() const;
