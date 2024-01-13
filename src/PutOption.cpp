@@ -6,7 +6,10 @@ using namespace std;
 ////////////////////////
 ////// Constructor /////
 ////////////////////////
-
+PutOption::PutOption() :
+	strike(0.0),
+	maturity(0.0) {
+}
 
 /*
 	Payoff function for PutOption object

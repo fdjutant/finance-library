@@ -6,6 +6,7 @@
 */
 class PutOption {
 public:
+	PutOption();
 	double strike;
 	double maturity;
 
