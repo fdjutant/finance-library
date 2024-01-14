@@ -7,18 +7,20 @@
 #include "LineChart.h"
 #include "CallOption.h"
 #include "PutOption.h"
+#include "Polynomial.h"
 using namespace std;
 
 int main() {
 
     // Perform unit testing
     //testMatlib();
-    testGeometry();
+    //testGeometry();
     //testCharts();
     //testPieChart();
     //testCallOption();
-    testPutOption();
+    //testPutOption();
     //testLineChart();
+    testPolynomial();
 
     // Check error for unassigned variable
     //double d;

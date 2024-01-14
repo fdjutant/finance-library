@@ -18,7 +18,6 @@ Circle::Circle() :
 
 }
 
-
 /*
 	Compute perimetry of a triangle
 */

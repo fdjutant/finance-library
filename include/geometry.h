@@ -2,7 +2,7 @@
 
 const double pi_value = 3.14159265358979;
 
-// forward declaration: allow 
+// forward declaration: allow recalling object within the object
 class CartesianPoint;
 
 /*
