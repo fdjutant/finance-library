@@ -1,5 +1,8 @@
 # Some finance library
 
+[PutOption.h](https://github.com/fdjutant/finance-library/blob/master/include/PutOption.h)
+An object for computing put option
+
 [CallOption.h](https://github.com/fdjutant/finance-library/blob/master/include/CallOption.h)
 An object for computing call option
 
@@ -20,6 +23,11 @@ An object for Black Scholes Model
  - min: find the minimum value from a vector.
  - max: find the maximum value from a vector.
  - prctile: generate a value from a vector given a percentile requested.
+
+ [polynomial.h](https://github.com/fdjutant/finance-library/blob/master/include/polynomial.h)
+ - testPolynomial: perform unit testings for functions and constructors in the library
+ - evaluate: compute the co-domain of the polynomial given the domain and coefficients
+ - add: sum one polynomial to another polynomial
 
 [charts.h](https://github.com/fdjutant/finance-library/blob/master/include/charts.h)
  - testCharts: perform unit testings for functions in the library.
