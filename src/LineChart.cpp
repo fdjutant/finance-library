@@ -70,6 +70,11 @@ void LineChart::addEntry(double xValue, double yValue) {
     yValues.push_back(yValue);
 }
 
+void LineChart::setSeries(vector<double> Xs, vector<double> Ys) {
+    xValues = Xs;
+    yValues = Ys;
+}
+
 void LineChart::writeAsHTML(ostream& out) const {
     writeTopBoilerPlateOfLineChart(out);
     writeLineChartData(out, xValues, yValues);
