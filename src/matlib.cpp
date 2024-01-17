@@ -82,16 +82,42 @@ vector<double> randnBoxMuller(int N) {
 }
 
 /*
-    Generate a random sampling that follows a uniform distribution and normal distribution
+    Generate a random sampling that follows a uniform distribution and normal distribution 
 */
-vector<double> randuniform(int n) {
-    vector<double> x(n);
-    for (int i = 0; i < n; i++) {
-        x[i] = (rand() + 1.0) / (RAND_MAX + 1.0);
-    }
-    return x;
+//vector<double> randuniform(int n) {
+//    vector<double> x(n);
+//    for (int i = 0; i < n; i++) {
+//        x[i] = (rand() + 1.0) / (RAND_MAX + 1.0);
+//    }
+//    return x;
+//}
+
+/*
+    Generate a random sampling that follows a uniform distribution and normal distribution using mersenneTwister algorithm
+*/
+
+// MersenneTwister random number generator
+static mt19937 mersenneTwister;
+
+// reset the number generator 
+void rng(const string& description) {
+    ASSERT(description == "default");
+    mersenneTwister.seed(mt19937::default_seed);
 }
 
+//  Create uniformly distributed random numbers 
+vector<double> randuniform(int n) {
+    vector<double> ret(n, 0.0);
+    for (int i = 0; i < n; i++) {
+        ret[i] = (mersenneTwister() + 0.5) /
+            (mersenneTwister.max() + 1.0);
+    }
+    return ret;
+}
+
+/*
+   Create a normally distributed random numbers
+*/
 vector<double> randn(int n) {
     vector<double> x = randuniform(n);
     for (int i = 0; i < n; i++){

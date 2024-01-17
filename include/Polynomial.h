@@ -14,7 +14,7 @@ public:
 
 	// constructors
 	Polynomial();
-	Polynomial(std::vector<double> a);
+	Polynomial(std::vector<double> coefficients);
 	Polynomial(double c);
 };
 

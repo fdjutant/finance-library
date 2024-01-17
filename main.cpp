@@ -20,7 +20,8 @@ int main() {
     //testCallOption();
     //testPutOption();
     //testLineChart();
-    testPolynomial();
+    //testPolynomial();
+    testBlackScholesModel();
 
     // Check error for unassigned variable
     //double d;
