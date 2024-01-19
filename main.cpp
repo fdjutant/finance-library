@@ -8,6 +8,7 @@
 #include "CallOption.h"
 #include "PutOption.h"
 #include "Polynomial.h"
+#include "MonteCarloPricer.h"
 using namespace std;
 
 int main() {
@@ -21,7 +22,8 @@ int main() {
     //testPutOption();
     //testLineChart();
     //testPolynomial();
-    testBlackScholesModel();
+    //testBlackScholesModel();
+    testMonteCarloPricer();
 
     // Check error for unassigned variable
     //double d;
