@@ -1,5 +1,8 @@
 # Some finance library
 
+[MonteCarloPricer.h](https://github.com/fdjutant/finance-library/blob/master/include/MonteCarloPricer.h)
+An object for computing pricing using Monte Carlo
+
 [PutOption.h](https://github.com/fdjutant/finance-library/blob/master/include/PutOption.h)
 An object for computing put option
 
