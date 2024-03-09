@@ -58,6 +58,7 @@ static void testVisually() {
 	bsm.volatility = 0.1;
 	bsm.stockPrice = 100.0;
 	bsm.date = 2.0;
+	bsm.drift = 0.0;
 
 	int nSteps = 10000;
 	double maturity = 4.0;
@@ -95,6 +96,6 @@ static void testGenerateRiskNeutralPricePath() {
 
 void testBlackScholesModel() {
 	setDebugEnabled(false);
-	//TEST(testVisually);
-	TEST(testGenerateRiskNeutralPricePath);
+	TEST(testVisually);
+	//TEST(testGenerateRiskNeutralPricePath);
 }
