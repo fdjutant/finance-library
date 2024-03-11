@@ -78,7 +78,7 @@ static void testGenerateRiskNeutralPricePath() {
 	bsm.riskFreeRate = 0.05;
 	bsm.volatility = 0.1;
 	bsm.stockPrice = 100.0;
-	bsm.date = 2.0;
+	bsm.date = 3.0;
 
 	int nPaths = 10000;
 	int nSteps = 5;
@@ -90,12 +90,13 @@ static void testGenerateRiskNeutralPricePath() {
 		finalPrices[i] = path.back(); // extract the latest timepoint pricepoint
 	}
 
-	ASSERT_APPROX_EQUAL(mean(finalPrices), exp(bsm.riskFreeRate * 2.0) * bsm.stockPrice, 0.5);
+	ASSERT_APPROX_EQUAL(mean(finalPrices), exp(bsm.riskFreeRate * bsm.date) * bsm.stockPrice, 0.5);
+	ASSERT_APPROX_EQUAL(standardDeviation(finalPrices, 0), bsm.volatility * sqrt(bsm.date), 0.5);
 
 }
 
 void testBlackScholesModel() {
 	setDebugEnabled(false);
-	TEST(testVisually);
-	//TEST(testGenerateRiskNeutralPricePath);
+	//TEST(testVisually);
+	TEST(testGenerateRiskNeutralPricePath);
 }
