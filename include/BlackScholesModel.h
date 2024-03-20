@@ -15,11 +15,12 @@ public:
 	double riskFreeRate;
 	double date;
 
-	std::vector<double> generatePricePath(double toDate, int nSteps) const;
-	std::vector<double> generateRiskNeutralPricePath(double toDate, int nSteps) const;
+	std::vector<double> generatePricePath(double toDate, int nSteps, int optionGenerator) const;
+	std::vector<double> generateRiskNeutralPricePath(double toDate, int nSteps, int optionGenerator) const;
 
 private:
-	std::vector<double> generatePricePath(double toDate, int nSteps, double drift) const;
+	std::vector<double> generatePricePath(double toDate, int nSteps, double drift, int optionGenerator) const;
+
 };
 
 void testBlackScholesModel();

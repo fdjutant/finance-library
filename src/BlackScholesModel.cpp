@@ -13,22 +13,26 @@ BlackScholesModel::BlackScholesModel() :
 	stockPrice(0.0),
 	volatility(0.0),
 	riskFreeRate(0.0),
-	date(0.0) {
+	date(0.0){
 }
 
 ////////////////////////
 ////// Functions ///////
 ////////////////////////
 
-vector<double> BlackScholesModel::generatePricePath(double toDate, int nSteps) const {
-	return generatePricePath(toDate, nSteps, drift);
+vector<double> BlackScholesModel::generatePricePath(double toDate, int nSteps, int optionGenerator) const {
+	return generatePricePath(toDate, nSteps, drift, optionGenerator);
 }
 
-vector<double> BlackScholesModel::generateRiskNeutralPricePath(double toDate, int nSteps) const {
-	return generatePricePath(toDate, nSteps, riskFreeRate);
+vector<double> BlackScholesModel::generateRiskNeutralPricePath(double toDate, int nSteps, int optionGenerator) const {
+	return generatePricePath(toDate, nSteps, riskFreeRate, optionGenerator);
 }
 
-vector<double>  BlackScholesModel::generatePricePath(double toDate, int nSteps, double drift) const {
+vector<double>  BlackScholesModel::generatePricePath(double toDate, int nSteps, double drift, int optionPathGenerator) const {
+
+	if (optionPathGenerator > 1 || optionPathGenerator < -1) {
+		DEBUG_PRINT("optionPathGenerator must be 1 or -1");
+	}
 
 	vector<double> path(nSteps, 0.0);
 	vector<double> epsilon = randn(nSteps);
@@ -39,7 +43,7 @@ vector<double>  BlackScholesModel::generatePricePath(double toDate, int nSteps, 
 
 	double currentLogS = log(stockPrice);
 	for (int i = 0; i < nSteps; i++) {
-		double dLogS = a + b * epsilon[i];
+		double dLogS = a + optionPathGenerator * b * epsilon[i];
 		double logS = currentLogS + dLogS;
 		path[i] = exp(logS);
 		currentLogS = logS;
@@ -62,8 +66,9 @@ static void testVisually() {
 
 	int nSteps = 10000;
 	double maturity = 4.0;
+	int optionGenerator = 1;
 
-	vector<double> path = bsm.generatePricePath(maturity, nSteps);
+	vector<double> path = bsm.generatePricePath(maturity, nSteps, optionGenerator);
 	double dt = (maturity - bsm.date) / nSteps;
 	vector<double> times = linspace(dt, maturity, nSteps);
 
@@ -83,10 +88,11 @@ static void testGenerateRiskNeutralPricePath() {
 	int nPaths = 10000;
 	int nSteps = 5;
 	double maturity = 4.0;
+	int optionGenerator = 1;
 
 	vector<double> finalPrices(nPaths, 0.0);
 	for (int i = 0; i < nPaths; i++) {
-		vector<double> path = bsm.generateRiskNeutralPricePath(maturity, nSteps);
+		vector<double> path = bsm.generateRiskNeutralPricePath(maturity, nSteps, optionGenerator);
 		finalPrices[i] = path.back(); // extract the latest timepoint pricepoint
 	}
 

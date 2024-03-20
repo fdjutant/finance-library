@@ -17,6 +17,7 @@ public:
 
 	// Price a call option
 	double price(const CallOption& option, const BlackScholesModel& model);
+	double priceAntitheticSampling(const CallOption& option, const BlackScholesModel& model);
 
 	// Price a put option
 	double price(const PutOption& option, const BlackScholesModel& model);
