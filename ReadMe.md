@@ -1,16 +1,24 @@
 # Some finance library
 
 [MonteCarloPricer.h](https://github.com/fdjutant/finance-library/blob/master/include/MonteCarloPricer.h)
-An object for computing pricing using Monte Carlo
+An object for computing pricing using Monte Carlo.
+- price: compute price of either call option or put option derivatives using Monte Carlo calculation.
+- priceAntitheticSampling: compute price of either call option or put option derivatives using Monte Carlo calculations with implementing variance reduction techniques, particularly the antithetic sampling, to improve the prediction. 
 
 [PutOption.h](https://github.com/fdjutant/finance-library/blob/master/include/PutOption.h)
-An object for computing put option
+An object for computing put option.
+- payoff: compute payoff for put option at maturity given the strike price.
+- price: estimate price for put option using Black-Scholes model.
 
 [CallOption.h](https://github.com/fdjutant/finance-library/blob/master/include/CallOption.h)
-An object for computing call option
+An object for computing call option.
+- payoff: compute payoff for call option at maturity given the strike price.
+- price: estimate price for call option using Black-Scholes model.
 
 [BlackScholesModel.h](https://github.com/fdjutant/finance-library/blob/master/include/BlackScholesModel.h)
-An object for Black Scholes Model
+An object for Black Scholes Model.
+- generatePricePath: generate price path assuming assets with drift.
+- generateRiskNeutralPricePath: generate price path assuming risk neutral, i.e. using risk free rate value as the drift parameter.
 
 [matlib.h](https://github.com/fdjutant/finance-library/blob/master/include/matlib.h)
  - testMatlib: perform unit testings for functions in the library.
