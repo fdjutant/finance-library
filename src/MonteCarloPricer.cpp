@@ -76,7 +76,7 @@ double MonteCarloPricer::price(const PutOption& putOption, const BlackScholesMod
 ///     Testing     /////
 /////////////////////////
 
-static void testpriceDiscreteTimeKnockOut() {
+static void testPriceDiscreteTimeKnockOut() {
 	rng("default");
 
 	UpAndOutOption uoo;
@@ -179,5 +179,5 @@ void testMonteCarloPricer() {
 	//TEST(testPriceCallOption);
 	//TEST(testPricePutOption);
 	//TEST(testPriceCallOptionAntitheticSampling);
-	TEST(testpriceDiscreteTimeKnockOut);
+	TEST(testPriceDiscreteTimeKnockOut);
 }
