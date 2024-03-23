@@ -24,8 +24,8 @@ int main() {
     //testLineChart();
     //testPolynomial();
     //testBlackScholesModel();
-    //testMonteCarloPricer();
-    testUpAndOutOption();
+    testMonteCarloPricer();
+    //testUpAndOutOption();
 
     // Check error for unassigned variable
     //double d;

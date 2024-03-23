@@ -45,7 +45,18 @@ double MonteCarloPricer::priceAntitheticSampling(const CallOption& callOption, c
 	return exp(-r * T) * mean;
 }
 
-
+double MonteCarloPricer::priceDiscreteTimeKnockOut(const UpAndOutOption& UpAndOutOption, const BlackScholesModel& model) {
+	double total = 0.0;
+	for (int i = 0; i < nScenarios; i++) {
+		vector<double> path = model.generateRiskNeutralPricePath(UpAndOutOption.maturity, 100, 1);
+		double payoff = UpAndOutOption.computePayoff(path);
+		total += payoff;
+	}
+	double mean = total / nScenarios;
+	double r = model.riskFreeRate;
+	double T = UpAndOutOption.maturity - model.date;
+	return exp(-r * T) * mean;
+}
 
 double MonteCarloPricer::price(const PutOption& putOption, const BlackScholesModel& model) {
 	double total = 0.0;
@@ -65,6 +76,36 @@ double MonteCarloPricer::price(const PutOption& putOption, const BlackScholesMod
 ///     Testing     /////
 /////////////////////////
 
+static void testpriceDiscreteTimeKnockOut() {
+	rng("default");
+
+	UpAndOutOption uoo;
+	uoo.strike = 105.0;
+	uoo.maturity = 2.0;
+	uoo.barrier = 1000.0; // price should be about the same with call option because barrier is high
+
+	CallOption c;
+	c.strike = 105.0;
+	c.maturity = 2.0;
+
+	//PutOption p;
+	//p.strike = 105.0;
+	//p.maturity = 2.0;
+	
+	BlackScholesModel m;
+	m.volatility = 0.1;
+	m.riskFreeRate = 0.05;
+	m.stockPrice = 100.0;
+	m.drift = 0.1;
+	m.date = 1;
+
+	MonteCarloPricer pricer;
+	double priceDiscreteTimeKnockOut = pricer.priceDiscreteTimeKnockOut(uoo, m);
+	double expected = c.price(m);
+
+	ASSERT_APPROX_EQUAL(priceDiscreteTimeKnockOut, expected, 0.1);
+}
+
 static void testPriceCallOptionAntitheticSampling() {
 	rng("default");
 
@@ -81,7 +122,7 @@ static void testPriceCallOptionAntitheticSampling() {
 	
 	MonteCarloPricer pricer;
 	double priceAntitheticSampling = pricer.priceAntitheticSampling(c, m);
-	double price = pricer.price(c, m);
+	double price = pricer.price(c, m); // with a regular path generator
 	double expected = c.price(m);
 	DEBUG_PRINT("Predicted price using Antithetic sampling = " << priceAntitheticSampling);
 	DEBUG_PRINT("predicted price = " << price);
@@ -137,5 +178,6 @@ void testMonteCarloPricer() {
 	setDebugEnabled(true);
 	//TEST(testPriceCallOption);
 	//TEST(testPricePutOption);
-	TEST(testPriceCallOptionAntitheticSampling);
+	//TEST(testPriceCallOptionAntitheticSampling);
+	TEST(testpriceDiscreteTimeKnockOut);
 }
