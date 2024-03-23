@@ -45,6 +45,8 @@ double MonteCarloPricer::priceAntitheticSampling(const CallOption& callOption, c
 	return exp(-r * T) * mean;
 }
 
+
+
 double MonteCarloPricer::price(const PutOption& putOption, const BlackScholesModel& model) {
 	double total = 0.0;
 	for (int i = 0; i < nScenarios; i++) {

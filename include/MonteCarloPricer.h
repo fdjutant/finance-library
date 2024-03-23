@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "CallOption.h"
 #include "PutOption.h"
+#include "UpAndOutOption.h"
 #include "BlackScholesModel.h"
 
 /*
