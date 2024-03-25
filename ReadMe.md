@@ -5,6 +5,7 @@ An object for computing pricing using Monte Carlo.
 - price: compute price of either call option or put option derivatives using Monte Carlo calculation.
 - priceAntitheticSampling: compute price for either call option or put option derivatives using Monte Carlo calculations with implementing variance reduction techniques, particularly the antithetic sampling, to improve the prediction. 
 - priceDiscreteTimeKnockOut: compute price for knock-out options
+- computeDelta: compute delta of a call option using pricing from Monte Carlo calculation.
 
 [UpAndOutOption.h](https://github.com/fdjutant/finance-library/blob/master/include/UpAndOutOption.h)
 An object for computing payoff from knock-out call option.
