@@ -20,6 +20,7 @@ public:
 	double price(const CallOption& option, const BlackScholesModel& model);
 	double priceAntitheticSampling(const CallOption& option, const BlackScholesModel& model);
 	double priceDiscreteTimeKnockOut(const UpAndOutOption& option, const BlackScholesModel& model);
+	double computeDelta(const CallOption& callOption, const BlackScholesModel& model);
 
 	// Price a put option
 	double price(const PutOption& option, const BlackScholesModel& model);

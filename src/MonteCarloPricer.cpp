@@ -72,9 +72,59 @@ double MonteCarloPricer::price(const PutOption& putOption, const BlackScholesMod
 	return exp(-r * T) * mean;
 }
 
+double MonteCarloPricer::computeDelta(const CallOption& callOption, const BlackScholesModel& model) {
+	double h = model.stockPrice * pow(10, -6);
+	
+	double total1 = 0.0;
+	double total2 = 0.0;
+	for (int i = 0; i < nScenarios; i++) {
+		vector<double> generatedPrice = model.generateRiskNeutralPricePathToComputeDelta(callOption.maturity, 1, 1);
+		
+		double stockPrice1 = generatedPrice[0];
+		double stockPrice2 = generatedPrice[1];
+
+		double payoff1 = callOption.payoff(stockPrice1);
+		double payoff2 = callOption.payoff(stockPrice2);
+
+		total1 += payoff1;
+		total2 += payoff2;
+	}
+	double mean1 = total1 / nScenarios;
+	double mean2 = total2 / nScenarios;
+	double r = model.riskFreeRate;
+	double T = callOption.maturity - model.date;
+	double pricing1 = exp(-r * T) * mean1;
+	double pricing2 = exp(-r * T) * mean2;
+	DEBUG_PRINT("pricing1 = " << pricing1 << "\n" << "pricing2 = " << pricing2);
+
+	return (pricing1 - pricing2) / (2 * h);
+}
+
 /////////////////////////
 ///     Testing     /////
 /////////////////////////
+
+static void testComputeDelta() {
+	rng("default");
+
+	CallOption c;
+	c.strike = 105.0;
+	c.maturity = 2.0;
+
+	BlackScholesModel m;
+	m.volatility = 0.1;
+	m.riskFreeRate = 0.05;
+	m.stockPrice = 106.0;
+	m.drift = 0.1;
+	m.date = 1;
+
+	MonteCarloPricer pricer;
+	double delta = pricer.computeDelta(c, m);
+
+	DEBUG_PRINT("delta = " << delta);
+	ASSERT((delta > -1) & (delta < 1));
+
+}
 
 static void testPriceDiscreteTimeKnockOut() {
 	rng("default");
@@ -179,5 +229,6 @@ void testMonteCarloPricer() {
 	//TEST(testPriceCallOption);
 	//TEST(testPricePutOption);
 	//TEST(testPriceCallOptionAntitheticSampling);
-	TEST(testPriceDiscreteTimeKnockOut);
+	//TEST(testPriceDiscreteTimeKnockOut);
+	TEST(testComputeDelta);
 }

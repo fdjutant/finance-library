@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "matlib.h"
 #include "LineChart.h"
+#include "MonteCarloPricer.h"
 using namespace std;
 
 ////////////////////////
@@ -28,6 +29,10 @@ vector<double> BlackScholesModel::generateRiskNeutralPricePath(double toDate, in
 	return generatePricePath(toDate, nSteps, riskFreeRate, optionGenerator);
 }
 
+vector<double> BlackScholesModel::generateRiskNeutralPricePathToComputeDelta(double toDate, int nSteps, int optionGenerator) const {
+	return generatePricePathToComputeDelta(toDate, nSteps, drift, optionGenerator);
+}
+
 vector<double>  BlackScholesModel::generatePricePath(double toDate, int nSteps, double drift, int optionPathGenerator) const {
 
 	if (optionPathGenerator > 1 || optionPathGenerator < -1) {
@@ -50,6 +55,38 @@ vector<double>  BlackScholesModel::generatePricePath(double toDate, int nSteps, 
 	}
 	return path;
 }
+
+vector<double> BlackScholesModel::generatePricePathToComputeDelta(double toDate, int nSteps, double drift, int optionPathGenerator) const {
+
+	if (optionPathGenerator > 1 || optionPathGenerator < -1) {
+		DEBUG_PRINT("optionPathGenerator must be 1 or -1");
+	}
+
+	vector<double> path1(nSteps, 0.0);
+	vector<double> path2(nSteps, 0.0);
+	vector<double> epsilon = randn(nSteps);
+
+	double dt = (toDate - date) / nSteps;
+	double a = (drift - volatility * volatility * 0.5) * dt;
+	double b = volatility * sqrt(dt);
+
+	double h = stockPrice * 0.000001;
+	double currentLogS1 = log(stockPrice + h);
+	double currentLogS2 = log(stockPrice - h);
+	for (int i = 0; i < nSteps; i++) {
+		double dLogS = a + optionPathGenerator * b * epsilon[i];
+		double logS1 = currentLogS1 + dLogS;
+		double logS2 = currentLogS2 + dLogS;
+		path1[i] = exp(logS1);
+		path2[i] = exp(logS2);
+		currentLogS1 = logS1;
+		currentLogS2 = logS2;
+	}
+	vector<double> pricing = { path1.back(), path2.back() };
+
+	return pricing;
+}
+
 
 /////////////////////////
 ///     Testing     /////
