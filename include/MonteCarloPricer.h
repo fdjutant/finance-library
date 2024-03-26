@@ -21,6 +21,7 @@ public:
 	double priceAntitheticSampling(const CallOption& option, const BlackScholesModel& model);
 	double priceDiscreteTimeKnockOut(const UpAndOutOption& option, const BlackScholesModel& model);
 	double computeDelta(const CallOption& callOption, const BlackScholesModel& model);
+	std::vector<double> computeCI(const CallOption& callOption, const BlackScholesModel& model) const;
 
 	// Price a put option
 	double price(const PutOption& option, const BlackScholesModel& model);

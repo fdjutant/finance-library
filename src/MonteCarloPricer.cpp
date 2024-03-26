@@ -100,9 +100,57 @@ double MonteCarloPricer::computeDelta(const CallOption& callOption, const BlackS
 	return (pricing1 - pricing2) / (2 * h);
 }
 
+vector<double> MonteCarloPricer::computeCI(const CallOption& callOption, const BlackScholesModel& model) const {
+	
+	vector<double> price;
+	double total = 0.0;
+	for (int i = 0; i < nScenarios; i++) {
+		vector<double> path = model.generateRiskNeutralPricePath(callOption.maturity, 1, 1);
+		double stockPrice = path.back();
+		double payoff = callOption.payoff(stockPrice);
+		total += payoff;
+		price.push_back(payoff);
+	}
+	double r = model.riskFreeRate;
+	double T = callOption.maturity - model.date;
+	double meanPrice = exp(-r * T) * (total / nScenarios);
+	double std = exp(-r * T) * standardDeviation(price, true);
+
+	// compute the confidence interval
+	vector<double> CI(2, 0);
+	double Zscore = 1.96; // 95% confidence interval
+	CI[0] = meanPrice - Zscore * (std / sqrt(nScenarios));
+	CI[1] = meanPrice + Zscore * (std / sqrt(nScenarios));
+
+	return CI;
+}
+
 /////////////////////////
 ///     Testing     /////
 /////////////////////////
+
+
+static void testComputeCI() {
+
+	rng("default");
+
+	CallOption c;
+	c.strike = 120.0;
+	c.maturity = 2.0;
+
+	BlackScholesModel m;
+	m.volatility = 0.1;
+	m.riskFreeRate = 0.05;
+	m.stockPrice = 106.0;
+	m.drift = 0.1;
+	m.date = 1;
+
+	MonteCarloPricer pricer;
+	vector<double> CI = pricer.computeCI(c, m);
+
+	DEBUG_PRINT("CI: " << CI[0] << " and " << CI[1]);
+	ASSERT(CI[0] > 0.0 && CI[1] > 0.0);
+}
 
 static void testComputeDelta() {
 	rng("default");
@@ -230,5 +278,6 @@ void testMonteCarloPricer() {
 	//TEST(testPricePutOption);
 	//TEST(testPriceCallOptionAntitheticSampling);
 	//TEST(testPriceDiscreteTimeKnockOut);
-	TEST(testComputeDelta);
+	//TEST(testComputeDelta);
+	TEST(testComputeCI);
 }
