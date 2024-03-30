@@ -42,6 +42,10 @@ double PutOption::price(const BlackScholesModel& bsm) const {
 	return normcdf(-d2) * K * exp(-r * T) - normcdf(-d1) * S;
 }
 
+double PutOption::getMaturity() const {
+	return maturity;
+}
+
 /////////////////////////
 ///     Testing     /////
 /////////////////////////

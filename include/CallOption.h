@@ -1,10 +1,12 @@
 #pragma once
+#include "stdafx.h"
 #include "BlackScholesModel.h"
+#include "PathIndependentOption.h"
 
 /*
 	A class for Call Option contracts
 */
-class CallOption {
+class CallOption : public PathIndependentOption {
 public:
 	double strike;
 	double maturity;
@@ -12,6 +14,7 @@ public:
 	double payoff(double stockAtMaturity) const;
 	double price(const BlackScholesModel& bsm) const;
 
+	double getMaturity() const;
 };
 
 void testCallOption();

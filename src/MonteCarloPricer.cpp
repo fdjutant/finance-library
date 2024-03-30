@@ -14,17 +14,17 @@ MonteCarloPricer::MonteCarloPricer() :
 ////// Functions ///////
 ////////////////////////
 
-double MonteCarloPricer::price(const CallOption& callOption, const BlackScholesModel& model) {
+double MonteCarloPricer::price(const PathIndependentOption& option, const BlackScholesModel& model) {
 	double total = 0.0;
 	for (int i = 0; i < nScenarios; i++) {
-		vector<double> path = model.generateRiskNeutralPricePath(callOption.maturity, 1, 1);
+		vector<double> path = model.generateRiskNeutralPricePath(option.getMaturity(), 1, 1);
 		double stockPrice = path.back();
-		double payoff = callOption.payoff(stockPrice);
+		double payoff = option.payoff(stockPrice);
 		total += payoff;
 	}
 	double mean = total / nScenarios;
 	double r = model.riskFreeRate;
-	double T = callOption.maturity - model.date;
+	double T = option.getMaturity() - model.date;
 	return exp(-r * T) * mean;
 }
 
@@ -55,20 +55,6 @@ double MonteCarloPricer::priceDiscreteTimeKnockOut(const UpAndOutOption& UpAndOu
 	double mean = total / nScenarios;
 	double r = model.riskFreeRate;
 	double T = UpAndOutOption.maturity - model.date;
-	return exp(-r * T) * mean;
-}
-
-double MonteCarloPricer::price(const PutOption& putOption, const BlackScholesModel& model) {
-	double total = 0.0;
-	for (int i = 0; i < nScenarios; i++) {
-		vector<double> path = model.generateRiskNeutralPricePath(putOption.maturity, 1, 1);
-		double stockPrice = path.back();
-		double payoff = putOption.payoff(stockPrice);
-		total += payoff;
-	}
-	double mean = total / nScenarios;
-	double r = model.riskFreeRate;
-	double T = putOption.maturity - model.date;
 	return exp(-r * T) * mean;
 }
 
@@ -135,19 +121,21 @@ static void testComputeCI() {
 	rng("default");
 
 	CallOption c;
-	c.strike = 120.0;
+	c.strike = 110.0;
 	c.maturity = 2.0;
 
 	BlackScholesModel m;
 	m.volatility = 0.1;
 	m.riskFreeRate = 0.05;
 	m.stockPrice = 106.0;
-	m.drift = 0.1;
-	m.date = 1;
+	m.drift = 0.01;
+	m.date = 1.0;
 
 	MonteCarloPricer pricer;
 	vector<double> CI = pricer.computeCI(c, m);
+	double price = pricer.price(c, m);
 
+	DEBUG_PRINT("price: " << price);
 	DEBUG_PRINT("CI: " << CI[0] << " and " << CI[1]);
 	ASSERT(CI[0] > 0.0 && CI[1] > 0.0);
 }
@@ -186,9 +174,9 @@ static void testPriceDiscreteTimeKnockOut() {
 	c.strike = 105.0;
 	c.maturity = 2.0;
 
-	//PutOption p;
-	//p.strike = 105.0;
-	//p.maturity = 2.0;
+	PutOption p;
+	p.strike = 105.0;
+	p.maturity = 2.0;
 	
 	BlackScholesModel m;
 	m.volatility = 0.1;
@@ -251,12 +239,16 @@ static void testPricePutOption() {
 
 }
 
-static void testPriceCallOption() {
+static void testPriceCallPutOption() {
 	rng("default");
 
 	CallOption c;
 	c.strike = 110;
 	c.maturity = 2;
+	
+	PutOption p;
+	p.strike = 110;
+	p.maturity = 2;
 
 	BlackScholesModel m;
 	m.volatility = 0.1;
@@ -266,18 +258,21 @@ static void testPriceCallOption() {
 	m.date = 1;
 
 	MonteCarloPricer pricer;
-	double price = pricer.price(c, m);
-	double expected = c.price(m);
-	ASSERT_APPROX_EQUAL(price, expected, 0.1);
+	double priceC = pricer.price(c, m);
+	double expectedC = c.price(m);
+	double priceP = pricer.price(p, m);
+	double expectedP = p.price(m);
+	DEBUG_PRINT("Monte Carlo Call Option price: " << priceP << " and " << priceC);
+	ASSERT_APPROX_EQUAL(priceC, expectedC, 0.1);
+	ASSERT_APPROX_EQUAL(priceP, expectedP, 0.1);
 
 }
 
 void testMonteCarloPricer() {
 	setDebugEnabled(true);
-	//TEST(testPriceCallOption);
-	//TEST(testPricePutOption);
+	TEST(testPriceCallPutOption);
 	//TEST(testPriceCallOptionAntitheticSampling);
 	//TEST(testPriceDiscreteTimeKnockOut);
 	//TEST(testComputeDelta);
-	TEST(testComputeCI);
+	//TEST(testComputeCI);
 }

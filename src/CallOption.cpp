@@ -34,6 +34,10 @@ double CallOption::price(const BlackScholesModel& bsm) const {
     return S * normcdf(d1) - exp(-r * T) * K * normcdf(d2);
 }
 
+double CallOption::getMaturity() const {
+    return maturity;
+}
+
 /////////////////////////
 ///     Testing     /////
 /////////////////////////
