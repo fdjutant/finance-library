@@ -15,7 +15,7 @@ using namespace std;
 int main() {
 
     // Perform unit testing
-    //testMatlib();
+    testMatlib();
     //testGeometry();
     //testCharts();
     //testPieChart();
@@ -24,7 +24,7 @@ int main() {
     //testLineChart();
     //testPolynomial();
     //testBlackScholesModel();
-    testMonteCarloPricer();
+    //testMonteCarloPricer();
     //testUpAndOutOption();
 
     // Check error for unassigned variable

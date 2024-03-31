@@ -5,7 +5,7 @@ class PathIndependentOption {
 public:
 	
 	// virtual destructor
-	virtual ~PathIndependentOption(){}
+	virtual ~PathIndependentOption() {};
 
 	// returns the payoff at maturity
 	virtual double payoff(double finalStokePrice) const = 0;

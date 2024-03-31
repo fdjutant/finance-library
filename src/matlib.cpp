@@ -5,6 +5,23 @@
 using namespace std;
 
 /*
+     Integrate using the rectangular rule
+*/
+double integral(RealFunction& f, double a, double b, int nPoints) {
+    
+    double h = (b - a) / nPoints;
+    double x = a + 0.5 * h;
+    double total = 0.0;
+    for (int i = 0; i < nPoints; i++) {
+        double y = f.evaluate(x);
+        total += y;
+        x += h;
+    }
+    return h * total;
+
+}
+
+/*
     Generate a percentile given a vector
 */
 double prctile(const vector<double>& x, double p) {
@@ -342,7 +359,6 @@ double blackScholesCallPrice(double K, double T, double S,double sigma, double r
     return callPriceOption;
 }
 
-
 // Generate a vector
 static void genVector(vector<double>& v) {
     v.push_back(-3.0);
@@ -355,8 +371,23 @@ static void genVector(vector<double>& v) {
 }
 
 /////////////////////////
-///     Testing     /////
+//////   Testing   //////
 /////////////////////////
+
+static void testIntegral() {
+    
+    class SinFunc : public RealFunction {
+    public:
+        double evaluate(double x) const {
+            return sin(x);
+        }
+    };
+
+    SinFunc integrand;
+    double estimate = integral(integrand, 1.0, 3.0, 1000);
+    double expected = -cos(3.0) + cos(1.0);
+    ASSERT_APPROX_EQUAL(estimate, expected, 0.0001);
+}
 
 static void testPrctile() {
     vector<double> v = { 1, 5, 3, 9, 7 };
@@ -502,7 +533,6 @@ static void testblackScholesPutPrice() {
     double sigma = 0.1;    // volatility
     double r = 0.03;       // risk-free interest rate
 
-
     // test that the put option is nearly worthless if the stock price (S) is far above the strike price (K)
     ASSERT(S < 10.0 * K);
 
@@ -515,29 +545,18 @@ static void testblackScholesPutPrice() {
 void testMatlib() {
 
     setDebugEnabled(false);
-
-    //TEST( testNormCdf );
-
-    //TEST(testNormInv );
-
+    TEST(testIntegral);
+    //TEST(testNormCdf);
+    //TEST(testNormInv);
     //TEST(testblackScholesPutPrice);
-
     //TEST(testSolveQuadratic);
-
     //TEST(testMean);
-
     //TEST(testStandardDeviation);
-
     //TEST(testMinMax);
-
     //TEST(testRanduniform);
-
     //TEST(testRandn);
-
     //TEST(testRandnBoxMuller);
-
     //TEST(testLinspace);
-
     //TEST(testPrctile);
 
 }
