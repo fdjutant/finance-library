@@ -6,12 +6,12 @@
 */
 class UpAndOutOption {
 public:
+	UpAndOutOption();
 	double strike;
 	double barrier;
 	double maturity;
 	
 	double computePayoff(const std::vector<double>& prices) const;
-	/*double price(const BlackScholsModel& bsm) const;*/
 };
 
 void testUpAndOutOption();

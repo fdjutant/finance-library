@@ -6,14 +6,16 @@ using namespace std;
 ////////////////////////
 ////// Constructor /////
 ////////////////////////
+
 PutOption::PutOption() :
 	strike(0.0),
 	maturity(0.0) {
 }
 
-/*
-	Payoff function for PutOption object
-*/
+////////////////////////
+////// Functions ///////
+////////////////////////
+
 double PutOption::payoff(double stockAtMaturity) const {
 	if (stockAtMaturity < strike) {
 		return strike - stockAtMaturity;
@@ -23,9 +25,6 @@ double PutOption::payoff(double stockAtMaturity) const {
 	}
 }
 
-/*
-	Pricing function for PutOption object
-*/
 double PutOption::price(const BlackScholesModel& bsm) const {
 
 	double S = bsm.stockPrice;

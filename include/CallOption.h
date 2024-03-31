@@ -8,6 +8,7 @@
 */
 class CallOption : public PathIndependentOption {
 public:
+	CallOption();
 	double strike;
 	double maturity;
 

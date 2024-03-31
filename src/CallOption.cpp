@@ -3,9 +3,19 @@
 #include "matlib.h"
 using namespace std;
 
-/*
-    Payoff function for CallOption object
-*/
+////////////////////////
+////// Constructor /////
+////////////////////////
+
+CallOption::CallOption() :
+    strike(0.0),
+    maturity(0.0) {
+}
+
+////////////////////////
+////// Functions ///////
+////////////////////////
+
 double CallOption::payoff(double stockAtMaturity) const {
     if (stockAtMaturity > strike) {
         return stockAtMaturity - strike;
@@ -15,9 +25,6 @@ double CallOption::payoff(double stockAtMaturity) const {
     }
 }
 
-/*
-    Pricing function for CallOption object
-*/
 double CallOption::price(const BlackScholesModel& bsm) const {
 
     double S = bsm.stockPrice;

@@ -3,9 +3,20 @@
 #include "matlib.h"
 using namespace std;
 
-/*
-	Payoff function for a countinuous-time knock-out call option 
-*/
+////////////////////////
+////// Constructor /////
+////////////////////////
+
+UpAndOutOption::UpAndOutOption() :
+	strike(0.0),
+	maturity(0.0),
+	barrier(0.0) {
+}
+
+////////////////////////
+////// Functions ///////
+////////////////////////
+
 double UpAndOutOption::computePayoff(const std::vector<double>& prices) const {
 
 	int Nsize = (int)prices.size();
@@ -26,6 +37,7 @@ double UpAndOutOption::computePayoff(const std::vector<double>& prices) const {
 /////////////////////////
 ///     Testing     /////
 /////////////////////////
+
 static void testComputePayOff() {
 	
 	UpAndOutOption uoo;

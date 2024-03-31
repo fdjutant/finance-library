@@ -6,7 +6,7 @@
 */
 class BlackScholesModel {
 public:
-	// constructor
+
 	BlackScholesModel(); 
 	
 	double drift;

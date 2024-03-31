@@ -115,7 +115,6 @@ vector<double> MonteCarloPricer::computeCI(const CallOption& callOption, const B
 ///     Testing     /////
 /////////////////////////
 
-
 static void testComputeCI() {
 
 	rng("default");
