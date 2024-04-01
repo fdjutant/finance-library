@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "RealFunction.h"
+#include "PathIndependentOption.h"
 
 static const double PI = 3.14159265358979;
 
@@ -38,6 +39,9 @@ double normInv(double x);
 
 // Integrate using the rectangular rule
 double integral(RealFunction& f, double a, double b, int nPoints);
+
+// Compute total compounded saving
+double valueCompounded(double principal, double interestRate, double nTimesPerYear, double duration, double contributionMonthly);
 
 // Black-Scholes model: call option and put option
 double blackScholesCallPrice(double strikePrice, double timeToMaturity, double spotPrice, double volatility, double riskFreeInterestRate);

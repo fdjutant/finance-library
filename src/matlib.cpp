@@ -4,9 +4,7 @@
 #include "CallOption.h"
 using namespace std;
 
-/*
-     Integrate using the rectangular rule
-*/
+// Integrate using the rectangular rule
 double integral(RealFunction& f, double a, double b, int nPoints) {
     
     double h = (b - a) / nPoints;
@@ -21,9 +19,7 @@ double integral(RealFunction& f, double a, double b, int nPoints) {
 
 }
 
-/*
-    Generate a percentile given a vector
-*/
+// Generate a percentile given a vector
 double prctile(const vector<double>& x, double p) {
 
     int n = (int)x.size();
@@ -328,6 +324,25 @@ double normInv(double x) {
 
 }
 
+static double integratePayOff(double a, double b, const PathIndependentOption& option) {
+
+    class PayOffFunction : public RealFunction {
+    public:
+
+        const PathIndependentOption& option;
+
+        PayOffFunction(const PathIndependentOption& option) : option(option) {}
+
+        double evaluate(double x) const {
+            return option.payoff(x);
+        }
+    };
+
+    PayOffFunction integrand(option);
+    return integral(integrand, a, b, 1000);
+
+}
+
 double blackScholesPutPrice(double K, double T, double S, double sigma, double r) {
 
     DEBUG_PRINT("blackScholesCallPrice(" << K << "," << T << "," << S << "," << sigma << "," << r << ")");
@@ -370,9 +385,25 @@ static void genVector(vector<double>& v) {
     v.push_back(3.0);
 }
 
+// Compute total compounded saving
+double valueCompounded(double P, double r, double n, double t, double C) {
+    double totalInterest = pow((1 + (r / n)), (n * t));
+    return P * totalInterest + C * ((totalInterest - 1) / (r / n));
+}
+
 /////////////////////////
 //////   Testing   //////
 /////////////////////////
+
+static void testValueCompounded() {
+    double P = 0;
+    double C = 150;
+    double r = 0.05;
+    double n = 12;
+    double t = 18;
+    double total = valueCompounded(P, r, n, t, C);
+    DEBUG_PRINT("total saving = " << total << "\n");
+}
 
 static void testIntegral() {
     
@@ -544,8 +575,9 @@ static void testblackScholesPutPrice() {
 
 void testMatlib() {
 
-    setDebugEnabled(false);
-    TEST(testIntegral);
+    setDebugEnabled(true);
+    TEST(testValueCompounded);
+    //TEST(testIntegral);
     //TEST(testNormCdf);
     //TEST(testNormInv);
     //TEST(testblackScholesPutPrice);
