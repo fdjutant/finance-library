@@ -10,17 +10,19 @@
 #include "Polynomial.h"
 #include "MonteCarloPricer.h"
 #include "UpAndOutOption.h"
+#include "DigitalCallOption.h"
 using namespace std;
 
 int main() {
 
     // Perform unit testing
-    testMatlib();
+    //testMatlib();
     //testGeometry();
     //testCharts();
     //testPieChart();
     //testCallOption();
     //testPutOption();
+    testDigitalCallOption();
     //testLineChart();
     //testPolynomial();
     //testBlackScholesModel();

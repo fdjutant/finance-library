@@ -4,7 +4,7 @@ using namespace std;
 
 ////////////////////////
 ////// Constructor /////
-///////////////////////
+////////////////////////
 
 MonteCarloPricer::MonteCarloPricer() :
 	nScenarios(10000) {
