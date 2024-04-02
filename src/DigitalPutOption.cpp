@@ -1,4 +1,4 @@
-#include "DigitalCallOption.h"
+#include "DigitalPutOption.h"
 #include "MonteCarloPricer.h"
 #include "BlackScholesModel.h"
 #include "matlib.h"
@@ -8,7 +8,7 @@ using namespace std;
 ////// Constructor /////
 ////////////////////////
 
-DigitalCallOption::DigitalCallOption() :
+DigitalPutOption::DigitalPutOption() :
 	strike(0.0),
 	maturity(0.0) {
 }
@@ -17,8 +17,8 @@ DigitalCallOption::DigitalCallOption() :
 ////// Functions ///////
 ////////////////////////
 
-double DigitalCallOption::payoff(double stockAtMaturity) const {
-	if (stockAtMaturity > strike) {
+double DigitalPutOption::payoff(double stockAtMaturity) const {
+	if (stockAtMaturity < strike) {
 		return 1;
 	}
 	else {
@@ -26,19 +26,19 @@ double DigitalCallOption::payoff(double stockAtMaturity) const {
 	}
 }
 
-double DigitalCallOption::getMaturity() const {
+double DigitalPutOption::getMaturity() const {
 	return maturity;
 }
 
 /////////////////////////
 ///     Testing     /////
 /////////////////////////
-static void testDigitalCallOptionPrice() {
+static void testDigitalPutOptionPrice() {
 	rng("default");
 
-	DigitalCallOption dco;
-	dco.strike = 100;
-	dco.maturity = 2;
+	DigitalPutOption dpo;
+	dpo.strike = 100;
+	dpo.maturity = 2;
 
 	BlackScholesModel m;
 	m.volatility = 0.1;
@@ -48,14 +48,13 @@ static void testDigitalCallOptionPrice() {
 	m.date = 1;
 
 	MonteCarloPricer pricer;
-	double price = pricer.price(dco, m);
-	//double payoff = dco.payoff(stockAtMaturity);
+	double price = pricer.price(dpo, m);
 	DEBUG_PRINT("price = " << price);
 	ASSERT_APPROX_EQUAL(price, 0.5, 0.1);
 
 }
 
-void testDigitalCallOption() {
+void testDigitalPutOption() {
 	setDebugEnabled(true);
-	TEST(testDigitalCallOptionPrice);
+	TEST(testDigitalPutOptionPrice);
 }

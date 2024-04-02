@@ -11,6 +11,7 @@
 #include "MonteCarloPricer.h"
 #include "UpAndOutOption.h"
 #include "DigitalCallOption.h"
+#include "DigitalPutOption.h"
 using namespace std;
 
 int main() {
@@ -22,7 +23,8 @@ int main() {
     //testPieChart();
     //testCallOption();
     //testPutOption();
-    testDigitalCallOption();
+    //testDigitalCallOption();
+    testDigitalPutOption();
     //testLineChart();
     //testPolynomial();
     //testBlackScholesModel();
