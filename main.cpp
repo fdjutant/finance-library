@@ -17,19 +17,20 @@ using namespace std;
 int main() {
 
     // Perform unit testing
-    //testMatlib();
+    testMatlib();
     //testGeometry();
     //testCharts();
     //testPieChart();
     //testCallOption();
     //testPutOption();
     //testDigitalCallOption();
-    testDigitalPutOption();
+    //testDigitalPutOption();
     //testLineChart();
     //testPolynomial();
     //testBlackScholesModel();
     //testMonteCarloPricer();
     //testUpAndOutOption();
+    //testNormalPDF();
 
     // Check error for unassigned variable
     //double d;

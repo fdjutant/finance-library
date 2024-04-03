@@ -3,7 +3,7 @@
 #include "RealFunction.h"
 #include "PathIndependentOption.h"
 
-static const double PI = 3.14159265358979;
+const double PI = 3.14159265358979;
 
 // Generate seed for random number generator
 void rng(const std::string& description);

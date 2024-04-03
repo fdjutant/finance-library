@@ -391,6 +391,16 @@ double valueCompounded(double P, double r, double n, double t, double C) {
     return P * totalInterest + C * ((totalInterest - 1) / (r / n));
 }
 
+class NormalPDF : public RealFunction {
+public:
+    double stdev = 1.0;
+    double expectation = 0.0;
+
+    double evaluate(double x) const {
+        return exp(-((x - expectation) * (x - expectation)) / 2 * stdev * stdev) * (1 / (sqrt(2 * PI * stdev * stdev)));
+    }
+};
+
 /////////////////////////
 //////   Testing   //////
 /////////////////////////
@@ -403,6 +413,16 @@ static void testValueCompounded() {
     double t = 18;
     double total = valueCompounded(P, r, n, t, C);
     DEBUG_PRINT("total saving = " << total << "\n");
+}
+
+static void testIntegralNormalPDF() {
+
+    NormalPDF integrand;
+    integrand.stdev = 1.0;
+    integrand.expectation = 0.0;
+    double estimate = integral(integrand, -2.0, 2.0, 1000);
+    ASSERT_APPROX_EQUAL(estimate, 0.95, 0.01);
+
 }
 
 static void testIntegral() {
@@ -576,7 +596,8 @@ static void testblackScholesPutPrice() {
 void testMatlib() {
 
     setDebugEnabled(true);
-    TEST(testValueCompounded);
+    TEST(testIntegralNormalPDF);
+    //TEST(testValueCompounded);
     //TEST(testIntegral);
     //TEST(testNormCdf);
     //TEST(testNormInv);
