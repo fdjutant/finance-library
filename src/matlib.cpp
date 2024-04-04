@@ -422,6 +422,7 @@ static void testIntegralNormalPDF() {
     integrand.expectation = 0.0;
     double estimate = integral(integrand, -2.0, 2.0, 1000);
     ASSERT_APPROX_EQUAL(estimate, 0.95, 0.01);
+    ASSERT_APPROX_EQUAL(estimate, normcdf(2.0), 0.1);
 
 }
 
