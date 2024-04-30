@@ -4,6 +4,49 @@
 #include "CallOption.h"
 using namespace std;
 
+/*
+    Estimate improper integrals using integration
+    by substitution
+*/
+double integralToInfinity(RealFunction& f, double x, int nPoints) {
+    class Integrand : public RealFunction {
+    public:
+        double x;
+        RealFunction& f;
+
+        double evaluate(double s) {
+            return 1 / (s * s) * f.evaluate(1 / s + x - 1);
+        }
+
+        Integrand(double x, RealFunction& f) : x(x), f(f)
+        {}
+    };
+
+    Integrand i(x, f);
+    return integral(i, 0, 1, nPoints);
+}
+
+double integralFromInfinity(RealFunction& f, double x, int nPoints) {
+    class ReversingIntegrand : public RealFunction {
+    public: 
+        RealFunction& f;
+
+        double evaluate(double x) {
+            return f.evaluate(-x);
+        }
+
+        ReversingIntegrand(RealFunction& f) : f(f)
+        {}
+    };
+
+    ReversingIntegrand i(f);
+    return integralToInfinity(i, -x, nPoints);
+}
+
+double integralOverR(RealFunction& f, int nPoints) {
+    return integralFromInfinity(f, 0, nPoints) + integralToInfinity(f, 0, nPoints);
+}
+
 // Integrate using the rectangular rule
 double integral(RealFunction& f, double a, double b, int nPoints) {
     
@@ -333,7 +376,7 @@ static double integratePayOff(double a, double b, const PathIndependentOption& o
 
         PayOffFunction(const PathIndependentOption& option) : option(option) {}
 
-        double evaluate(double x) const {
+        double evaluate(double x) {
             return option.payoff(x);
         }
     };
@@ -396,7 +439,7 @@ public:
     double stdev = 1.0;
     double expectation = 0.0;
 
-    double evaluate(double x) const {
+    double evaluate(double x) {
         return exp(-((x - expectation) * (x - expectation)) / 2 * stdev * stdev) * (1 / (sqrt(2 * PI * stdev * stdev)));
     }
 };
@@ -404,6 +447,17 @@ public:
 /////////////////////////
 //////   Testing   //////
 /////////////////////////
+
+
+static void testIntegralInfinity() {
+    NormalPDF normalPDF;
+    double estimateToInfinity = integralToInfinity(normalPDF, -2.0, 1000);
+    ASSERT_APPROX_EQUAL(estimateToInfinity, 1-normcdf(-2.0), 0.001);
+    double estimateFromInfinity = integralFromInfinity(normalPDF, 2.0, 1000);
+    ASSERT_APPROX_EQUAL(estimateFromInfinity, normcdf(2.0), 0.001);
+    double estimateOverR = integralOverR(normalPDF, 1000);
+    ASSERT_APPROX_EQUAL(estimateOverR, 1.0, 0.001);
+}
 
 static void testValueCompounded() {
     double P = 0;
@@ -430,7 +484,7 @@ static void testIntegral() {
     
     class SinFunc : public RealFunction {
     public:
-        double evaluate(double x) const {
+        double evaluate(double x) {
             return sin(x);
         }
     };
@@ -597,7 +651,8 @@ static void testblackScholesPutPrice() {
 void testMatlib() {
 
     setDebugEnabled(true);
-    TEST(testIntegralNormalPDF);
+    TEST(testIntegralInfinity);
+    //TEST(testIntegralNormalPDF);
     //TEST(testValueCompounded);
     //TEST(testIntegral);
     //TEST(testNormCdf);

@@ -5,6 +5,11 @@
 
 const double PI = 3.14159265358979;
 
+// Estimate improper integrals over a function f
+double integralToInfinity(RealFunction& f, double x, int nSteps);
+double integralFromInfinity(RealFunction& f, double x, int nSteps);
+double integralOverR(RealFunction& f, int nPoints);
+
 // Generate seed for random number generator
 void rng(const std::string& description);
 
