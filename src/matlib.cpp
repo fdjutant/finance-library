@@ -5,6 +5,17 @@
 using namespace std;
 
 /*
+    Differentiate any real function using 
+    central finite differences
+*/
+double differentiateNumerically(RealFunction& f, double x) {
+    
+    double h = x / 10.0;
+    return (f.evaluate(x + h) - f.evaluate(x - h)) / (2 * h);
+
+}
+
+/*
     Estimate improper integrals using integration
     by substitution
 */
@@ -444,9 +455,40 @@ public:
     }
 };
 
+class NormalCDF : public RealFunction {
+public:
+    double stdev = 1.0;
+    double expectation = 0.0;
+    
+    double evaluate(double x) {
+        return normcdf(x);
+    }
+};
+
+
 /////////////////////////
 //////   Testing   //////
 /////////////////////////
+
+static void testDifferentiateNumerically() {
+    class SinFunc : public RealFunction {
+    public:
+        double evaluate(double x) {
+            return sin(x);
+        }
+    };
+
+    SinFunc sinFunction;
+    double a = PI / 6.0;
+    double cosFunc_estimated = differentiateNumerically(sinFunction, a);
+    ASSERT_APPROX_EQUAL(cosFunc_estimated, cos(a), 0.001);
+
+    NormalCDF normalCDF;
+    double x = 0.5;
+    double normalPDF_estimate = differentiateNumerically(normalCDF, x);
+    NormalPDF normalPDF_formula;
+    ASSERT_APPROX_EQUAL(normalPDF_estimate, normalPDF_formula.evaluate(x), 0.001);
+}
 
 
 static void testIntegralInfinity() {
@@ -651,7 +693,8 @@ static void testblackScholesPutPrice() {
 void testMatlib() {
 
     setDebugEnabled(true);
-    TEST(testIntegralInfinity);
+    TEST(testDifferentiateNumerically);
+    //TEST(testIntegralInfinity);
     //TEST(testIntegralNormalPDF);
     //TEST(testValueCompounded);
     //TEST(testIntegral);

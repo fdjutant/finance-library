@@ -5,6 +5,9 @@
 
 const double PI = 3.14159265358979;
 
+// Differentiate any real Function
+double differentiateNumerically(RealFunction& f, double x);
+
 // Estimate improper integrals over a function f
 double integralToInfinity(RealFunction& f, double x, int nSteps);
 double integralFromInfinity(RealFunction& f, double x, int nSteps);
