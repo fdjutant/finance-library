@@ -12,12 +12,14 @@
 #include "UpAndOutOption.h"
 #include "DigitalCallOption.h"
 #include "DigitalPutOption.h"
+#include "RectangleRulePricer.h"
 using namespace std;
 
 int main() {
 
     // Perform unit testing
-    testMatlib();
+    testRectangleRulePricer();
+    //testMatlib();
     //testGeometry();
     //testCharts();
     //testPieChart();

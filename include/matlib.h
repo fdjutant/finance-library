@@ -20,7 +20,7 @@ void rng(const std::string& description);
 double prctile(const std::vector<double>& vecInput, double percentage);
 
 // Generate a vector with equi-distant between elements
-std::vector<double> linspace(double startPoint, double finalPoint, double N);
+std::vector<double> linspace(double startPoint, double finalPoint, int N);
 
 // Generate uniformly distributed random numbers 
 std::vector<double> randuniform(int n);

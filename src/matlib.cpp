@@ -102,7 +102,7 @@ double prctile(const vector<double>& x, double p) {
 /*
     Generate equally spaced vector
 */
-vector<double> linspace(double startPoint, double finalPoint, double N) {
+vector<double> linspace(double startPoint, double finalPoint, int N) {
     
     ASSERT(N >= 2);
 
