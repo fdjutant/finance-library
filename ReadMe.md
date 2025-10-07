@@ -1,4 +1,4 @@
-# Some finance library
+# C++ Finance Toolkit: Options, Monte Carlo, Models
 
 [MonteCarloPricer.h](https://github.com/fdjutant/finance-library/blob/master/include/MonteCarloPricer.h)
 An object for computing pricing using Monte Carlo.
